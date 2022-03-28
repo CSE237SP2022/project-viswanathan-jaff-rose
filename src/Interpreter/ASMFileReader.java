@@ -1,6 +1,7 @@
 package Interpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class ASMFileReader {
@@ -9,14 +10,17 @@ public class ASMFileReader {
 	
 	private File file;
 	
+	private LinkedList<String> assemblyLines;
+	
 	public ASMFileReader() {
-		
+		this.assemblyLines = new LinkedList<String>();
 	}
 	
 	public ASMFileReader(String filename) {
 		
 		this.file = new File(filename);
 		this.filepath = filename;
+		this.assemblyLines = new LinkedList<String>();
 		
 	}
 	
@@ -70,8 +74,11 @@ public class ASMFileReader {
             }
 
             while (sc.hasNextLine()) {
-                System.out.println(sc.nextLine());
+            	String line = sc.nextLine();
+                this.assemblyLines.add(line);
+                System.out.println(line);
             }
+            sc.close();
 
         } catch (Exception e){
             System.out.println("File not found");
