@@ -124,19 +124,7 @@ public class ASMFileReader {
 
     public static void main(String[] args){
     	
-    	ASMFileReader obj = new ASMFileReader();
     	
-    	obj.assemblyLines.add("ADD r24, r25");
-    	obj.assemblyLines.add("INC r25");
-    	
-    	obj.parseAllAssemblyLines();
-    	
-    	for( int i = 0; i < obj.parsedAssemblyLines.size(); i++ ) {
-    		String[] temp = obj.parsedAssemblyLines.get(i);
-    		for( int j = 0; j < temp.length; j++ ) {
-    			System.out.println(temp[j]);
-    		}
-    	}
         
     }
 }
