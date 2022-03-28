@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,27 @@ public class TestASMFileReader {
 		
 		for( int i = 0; i < completedParse.length; i++ ) {
 			assertTrue(completedParse[i].equals(returnedArray[i]));
+		}
+		
+		
+		
+	}
+	
+	@Test
+	void test_parse_all_lines() {
+		ASMFileReader AFR = new ASMFileReader();
+		String lineToParseOne = "ADD r24, r25";
+		String lineToParseTwo = "INC r23";
+		String[] completedParseOne= {"ADD", "r24", "r25"};
+		String[] completedParseTwo = {"INC", "r23"};
+		LinkedList<String[]> listOfParsedLines = new LinkedList<>();
+		listOfParsedLines.add(completedParseOne);
+		listOfParsedLines.add(completedParseTwo);
+		
+		LinkedList<String[]> returnedListOfParsedLines = AFR.parseAllAssemblyLines();
+		
+		for ( int i = 0; i < returnedListOfParsedLines.size(); i++ ) {
+			
 		}
 		
 		
