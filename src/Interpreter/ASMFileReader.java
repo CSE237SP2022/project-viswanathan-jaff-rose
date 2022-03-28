@@ -92,11 +92,27 @@ public class ASMFileReader {
         }
 		
 	}
+	
+	public String[] parseAssemblyLine( String lineOfAssembly ) {
+		int indexOfString = 0;
+		String opCode = "";
+		while( lineOfAssembly.charAt(indexOfString) != ' ' ) {
+			opCode += lineOfAssembly.charAt(indexOfString);
+			indexOfString++;
+		}
+		lineOfAssembly = lineOfAssembly.substring(indexOfString);
+		lineOfAssembly = lineOfAssembly.replaceAll(" ", "");
+		String[] arrayOfParameters = lineOfAssembly.split(",");
+		String[] arrayOfSeperateOpcodeAndParameters = new String[arrayOfParameters.length + 1];
+		arrayOfSeperateOpcodeAndParameters[0] = opCode;
+		for( int i = 0; i < arrayOfParameters.length; i++ ) {
+			arrayOfSeperateOpcodeAndParameters[i+1] = arrayOfParameters[i];
+		}
+		return arrayOfSeperateOpcodeAndParameters;
+	}
 
     public static void main(String[] args){
-
-        
-
+    	
         
         
     }
