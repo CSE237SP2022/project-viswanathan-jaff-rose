@@ -55,6 +55,22 @@ public class TestASMFileReader {
 		}
 	}
 	
+	@Test
+	void test_parse_line() {
+		ASMFileReader AFR = new ASMFileReader();
+		String lineToParse = "ADD r24, r25";
+		String[] completedParse = {"ADD", "r24", "r25"};
+		
+		String[] returnedArray = AFR.parseAssemblyLine(lineToParse);
+		
+		for( int i = 0; i < completedParse.length; i++ ) {
+			assertTrue(completedParse[i].equals(returnedArray[i]));
+		}
+		
+		
+		
+	}
+	
 	
 
 }
