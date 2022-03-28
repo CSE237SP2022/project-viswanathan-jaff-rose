@@ -1,2 +1,3 @@
-ADD 4
-DEL 6
+LDI r24, 0xFF
+
+ADI r24, 0x01
