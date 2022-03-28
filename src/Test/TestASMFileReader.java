@@ -14,7 +14,7 @@ public class TestASMFileReader {
 		try {
 			ASMFileReader AFR = new ASMFileReader();
 		} catch (Exception e) {
-			fail("Unable to construct empty spell checker");
+			fail("Unable to construct empty ASMFileReader");
 		}
 	}
 	
@@ -28,7 +28,21 @@ public class TestASMFileReader {
 			AFR.read();
 			
 		} catch (Exception e) {
-			fail("Unable to construct empty spell checker");
+			fail("Unable to construct ASMFileReader with fed in filepath");
+		}
+	}
+	
+	@Test
+	void test_read_file() {
+		try {
+			ASMFileReader AFR = new ASMFileReader("myAsmFile.S");
+			
+			assertTrue(AFR.getFilepath().equals("myAsmFile.S"));
+			
+			AFR.read();
+			
+		} catch (Exception e) {
+			fail("Unable to construct ASMFileReader with fed in filepath");
 		}
 	}
 	
