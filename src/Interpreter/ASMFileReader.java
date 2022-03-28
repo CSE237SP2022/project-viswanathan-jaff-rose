@@ -1,6 +1,7 @@
 package Interpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -12,8 +13,11 @@ public class ASMFileReader {
 	
 	private LinkedList<String> assemblyLines;
 	
+	private LinkedList<String[]> parsedAssemblyLines;
+	
 	public ASMFileReader() {
 		this.assemblyLines = new LinkedList<String>();
+		this.parsedAssemblyLines = new LinkedList<String[]>();
 	}
 	
 	public ASMFileReader(String filename) {
@@ -21,7 +25,7 @@ public class ASMFileReader {
 		this.file = new File(filename);
 		this.filepath = filename;
 		this.assemblyLines = new LinkedList<String>();
-		
+		this.parsedAssemblyLines = new LinkedList<String[]>();
 	}
 	
 	public String getIndividualASMline(int lineNumber) {
@@ -110,10 +114,29 @@ public class ASMFileReader {
 		}
 		return arrayOfSeperateOpcodeAndParameters;
 	}
+	
+	public void parseAllAssemblyLines() {
+		for( int i = 0; i < assemblyLines.size(); i++ ) {
+			String[] parsedLine = parseAssemblyLine( assemblyLines.get(i));
+			parsedAssemblyLines.add(parsedLine);
+		}
+	}
 
     public static void main(String[] args){
     	
-        
+    	ASMFileReader obj = new ASMFileReader();
+    	
+    	obj.assemblyLines.add("ADD r24, r25");
+    	obj.assemblyLines.add("INC r25");
+    	
+    	obj.parseAllAssemblyLines();
+    	
+    	for( int i = 0; i < obj.parsedAssemblyLines.size(); i++ ) {
+    		String[] temp = obj.parsedAssemblyLines.get(i);
+    		for( int j = 0; j < temp.length; j++ ) {
+    			System.out.println(temp[j]);
+    		}
+    	}
         
     }
 }
