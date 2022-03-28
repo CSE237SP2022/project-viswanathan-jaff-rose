@@ -21,9 +21,9 @@ public class TestASMFileReader {
 	@Test
 	void test_constructor_filepath() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("myAsmFile.S");
+			ASMFileReader AFR = new ASMFileReader("Test.S");
 			
-			assertTrue(AFR.getFilepath().equals("myAsmFile.S"));
+			assertTrue(AFR.getFilepath().equals("Test.S"));
 			
 			AFR.read();
 			
@@ -35,9 +35,9 @@ public class TestASMFileReader {
 	@Test
 	void test_read_file() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("myAsmFile.S");
+			ASMFileReader AFR = new ASMFileReader("Test.S");
 			
-			assertTrue(AFR.getFilepath().equals("myAsmFile.S"));
+			assertTrue(AFR.getFilepath().equals("Test.S"));
 			
 			AFR.read();
 			
