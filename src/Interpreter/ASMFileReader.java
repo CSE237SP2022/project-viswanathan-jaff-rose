@@ -1,6 +1,7 @@
 package Interpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -12,8 +13,11 @@ public class ASMFileReader {
 	
 	private LinkedList<String> assemblyLines;
 	
+	private LinkedList<String[]> parsedAssemblyLines;
+	
 	public ASMFileReader() {
 		this.assemblyLines = new LinkedList<String>();
+		this.parsedAssemblyLines = new LinkedList<String[]>();
 	}
 	
 	public ASMFileReader(String filename) {
@@ -21,7 +25,7 @@ public class ASMFileReader {
 		this.file = new File(filename);
 		this.filepath = filename;
 		this.assemblyLines = new LinkedList<String>();
-		
+		this.parsedAssemblyLines = new LinkedList<String[]>();
 	}
 	
 	public String getIndividualASMline(int lineNumber) {
@@ -110,10 +114,17 @@ public class ASMFileReader {
 		}
 		return arrayOfSeperateOpcodeAndParameters;
 	}
+	
+	public void parseAllAssemblyLines() {
+		for( int i = 0; i < assemblyLines.size(); i++ ) {
+			String[] parsedLine = parseAssemblyLine( assemblyLines.get(i));
+			parsedAssemblyLines.add(parsedLine);
+		}
+	}
 
     public static void main(String[] args){
     	
-        
+    	
         
     }
 }
