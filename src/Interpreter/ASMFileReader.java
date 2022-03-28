@@ -1,14 +1,58 @@
-//package Interpreter;
+package Interpreter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ASMFileReader {
+	
+	private String filepath;
+	
+	private File file;
+	
+	public ASMFileReader() {
+		
+	}
+	
+	public ASMFileReader(String filename) {
+		
+		this.file = new File(filename);
+		this.filepath = filename;
+		
+	}
+	
+	public String getFilepath() {
+		return this.filepath;
+	}
+	
+	public void loadFile(String filename) {
+		
+		this.file = new File(filename);
+		
+		try {
+            Scanner sc = new Scanner(file);
+            String fileName = file.toString();
+            boolean validFile = false;
+            int index = fileName.lastIndexOf('.');
 
-    public static void main(String[] args){
-
-        File file = new File(args[0]);
-
-        try {
+            if(index > 0) {
+                String extension = fileName.substring(index + 1);
+                if(!extension.equals("S")){
+                	System.out.println("Invalid File Extension: is not a .S file");
+                    throw new FileNotFoundException();
+                }
+            }
+            
+            this.filepath = filename;
+		}
+		catch (Exception e){
+			
+		}
+		
+	}
+	
+	public void read() {
+		
+		try {
             Scanner sc = new Scanner(file);
             String fileName = file.toString();
             boolean validFile = false;
@@ -32,6 +76,14 @@ public class ASMFileReader {
         } catch (Exception e){
             System.out.println("File not found");
         }
+		
+	}
+
+    public static void main(String[] args){
+
+        
+
+        
         
     }
 }
