@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -74,21 +75,36 @@ public class TestASMFileReader {
 	
 	@Test
 	void test_parse_all_lines() {
-		ASMFileReader AFR = new ASMFileReader();
-		String lineToParseOne = "ADD r24, r25";
-		String lineToParseTwo = "INC r23";
-		String[] completedParseOne= {"ADD", "r24", "r25"};
-		String[] completedParseTwo = {"INC", "r23"};
-		LinkedList<String[]> listOfParsedLines = new LinkedList<>();
-		listOfParsedLines.add(completedParseOne);
-		listOfParsedLines.add(completedParseTwo);
 		
-		LinkedList<String[]> returnedListOfParsedLines = AFR.parseAllAssemblyLines();
-		
-		for ( int i = 0; i < returnedListOfParsedLines.size(); i++ ) {
+		try {
 			
+			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			AFR.read();    
+			String[] completedParseOne= {"ADD", "r24", "r25"};
+			String[] completedParseTwo = {"INC", "r23"};
+			LinkedList<String[]> listOfParsedLines = new LinkedList<>();
+			listOfParsedLines.add(completedParseOne);
+			listOfParsedLines.add(completedParseTwo);
+			
+			AFR.parseAllAssemblyLines();
+			
+			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			
+			
+			for( int i = 0; i < returnedLines.size(); i++ ) {
+				
+				for( int j = 0; j < returnedLines.get(i).length; j++ ) {
+					
+					assertTrue( listOfParsedLines.get(i)[j].equals(returnedLines.get(i)[j]));
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			fail("Error occured during file reading");
 		}
 		
+			
 		
 		
 	}
