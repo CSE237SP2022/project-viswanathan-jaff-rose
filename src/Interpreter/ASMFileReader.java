@@ -67,7 +67,7 @@ public class ASMFileReader {
 		try {
             Scanner sc = new Scanner(this.file);
             
-            System.out.println(sc);
+            // System.out.println(sc);
             
             String fileName = this.file.toString();
             boolean validFile = false;
@@ -87,7 +87,7 @@ public class ASMFileReader {
             while (sc.hasNextLine()) {
             	String line = sc.nextLine();
                 this.assemblyLines.add(line);
-                System.out.println(line);
+                // System.out.println(line);
             }
             sc.close();
 
@@ -120,6 +120,10 @@ public class ASMFileReader {
 			String[] parsedLine = parseAssemblyLine( assemblyLines.get(i));
 			parsedAssemblyLines.add(parsedLine);
 		}
+	}
+	
+	public LinkedList<String[]> getAllParsedLines() {
+		return this.parsedAssemblyLines;
 	}
 
     public static void main(String[] args){
