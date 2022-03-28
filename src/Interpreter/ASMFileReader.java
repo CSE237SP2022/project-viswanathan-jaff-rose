@@ -86,8 +86,10 @@ public class ASMFileReader {
 
             while (sc.hasNextLine()) {
             	String line = sc.nextLine();
-                this.assemblyLines.add(line);
-                // System.out.println(line);
+            	if ( !line.equals(" ") ) {
+            		this.assemblyLines.add(line);
+            	}
+                System.out.println(line);
             }
             sc.close();
 
