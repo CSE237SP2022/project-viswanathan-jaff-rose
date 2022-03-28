@@ -24,6 +24,10 @@ public class ASMFileReader {
 		
 	}
 	
+	public String getIndividualASMline(int lineNumber) {
+		return assemblyLines.get(lineNumber);
+	}
+	
 	public String getFilepath() {
 		return this.filepath;
 	}
@@ -33,7 +37,7 @@ public class ASMFileReader {
 		this.file = new File(filename);
 		
 		try {
-            Scanner sc = new Scanner(file);
+            Scanner sc = new Scanner(filename);
             String fileName = file.toString();
             boolean validFile = false;
             int index = fileName.lastIndexOf('.');
@@ -57,8 +61,11 @@ public class ASMFileReader {
 	public void read() {
 		
 		try {
-            Scanner sc = new Scanner(file);
-            String fileName = file.toString();
+            Scanner sc = new Scanner(this.file);
+            
+            System.out.println(sc);
+            
+            String fileName = this.file.toString();
             boolean validFile = false;
             int index = fileName.lastIndexOf('.');
 
