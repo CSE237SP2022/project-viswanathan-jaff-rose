@@ -130,7 +130,9 @@ public class ASMFileReader {
 
     public static void main(String[] args){
     	
-    	
+    	ASMFileReader AFR = new ASMFileReader(args[0]);
+		
+		AFR.read();
         
     }
 }

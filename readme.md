@@ -17,6 +17,8 @@ What commands are needed to compile and run your code from the command line (or 
   - Run
 ```bash
 
-sh src/Interpreter/run.sh
+sh run.sh src/Interpreter/Test.S
 
 ```
+
+It does not currently compile the code, we will fix that over the weekend but it will run a test case.
