@@ -89,7 +89,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		for(byte register : this.r_registers) {
 			
 			debugString.append("r" + registerNumber + ": 0x");
-			debugString.append(register);
+			debugString.append(String.format("%02X ", register));
 			debugString.append("  ");
 
 			if(registerNumber % 6 == 0) {
