@@ -1,5 +1,8 @@
 package Atmega328CPUInstructions;
 
+
+import Interpreter.AbstractCPU;
+
 public abstract class AbstractInstruction {
 	
 	
@@ -8,6 +11,9 @@ public abstract class AbstractInstruction {
 	
 	
 	public abstract void run();
+
+
+	public abstract AbstractCPU run(AbstractCPU CPU);
 	
 	
 	

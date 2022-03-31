@@ -1,5 +1,6 @@
 package Interpreter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -7,8 +8,6 @@ import Atmega328CPUInstructions.AbstractInstruction;
 import Atmega328CPUInstructions.INC;
 
 public class ATmega328PCPU extends AbstractCPU {
-	
-	
 	
 	private byte[] r_registers;
 	
@@ -24,6 +23,8 @@ public class ATmega328PCPU extends AbstractCPU {
 	private byte I_register;
 	
 	private HashMap<String, AbstractInstruction> instructionMap;
+	
+	private LinkedList<AbstractCPU> CPUStates;
 	
 	private void create_opcode_map() {
 		
@@ -42,13 +43,22 @@ public class ATmega328PCPU extends AbstractCPU {
 	
 	public void run(String[][] instructions, boolean debugMode) {
 		
+		if(debugMode) {
+			System.out.println(this.toString() + "\n");
+		}
+		
 		for(String [] Line : instructions) {
 			
 			AbstractInstruction InstructionToExecute = instructionMap.get(Line[0]);
-			InstructionToExecute.run();
+			
+			String[] Args = pop_args(Line);
+			
+			InstructionToExecute.setArgs( Args );
+			InstructionToExecute.run(this);
 			
 			if(debugMode) {
-				System.out.println(this.toString());
+				System.out.println(Arrays.toString(Line));
+				System.out.println(this.toString() + "\n");
 			}
 			
 		}
@@ -57,6 +67,18 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 	}
 	
+	private String[] pop_args(String[] line) {
+		
+		String [] args = new String[line.length-1];
+		
+		for(int i=1;i<line.length;i++) {
+			args[i-1] = line[i];
+		}
+		
+		return args;
+	}
+
+
 	public String toString() {
 		
 		StringBuilder debugString = new StringBuilder();
@@ -73,6 +95,7 @@ public class ATmega328PCPU extends AbstractCPU {
 			if(registerNumber % 6 == 0) {
 				debugString.append("\n");
 			}
+			
 			registerNumber++;
 			
 		}
@@ -81,7 +104,29 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 	}
 
-	public static void main(String[] args) {
+	@Override
+	public void setRegister(String register, byte value) {
+		
+		switch (register) {
+			case "r29":
+				this.r_registers[28] = value;
+			
+		}
+		
+	}
+	
+	@Override
+	public byte getRegister(String register) {
+		
+		switch (register) {
+		case "r29":
+			return this.r_registers[29];
+		
+		}
+		return 0;
+	}
+	
+public static void main(String[] args) {
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -90,5 +135,8 @@ public class ATmega328PCPU extends AbstractCPU {
 		ArduinoUno.run(instructions, true);
 
 	}
+
+
+
 
 }
