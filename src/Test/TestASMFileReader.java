@@ -1,7 +1,6 @@
 package Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import  org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
+
 
 import Interpreter.ASMFileReader;
 

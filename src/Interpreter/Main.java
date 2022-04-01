@@ -30,22 +30,17 @@ public class Main {
 			
 		}
 		
+		ASMFileReader AFR = new ASMFileReader(args[0]);
 		
+		AFR.read();
 		
-		else {
-			
-			ASMFileReader AFR = new ASMFileReader(args[0]);
-			
-			
-			AFR.read();
-			
-			AbstractCPU ArduinoUno = new ATmega328PCPU();
-			
-			System.out.println(AFR.getAllParsedLines());
-			
-			ArduinoUno.run(AFR.getAllParsedLines(), debugMode);
+		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
-		}
+		System.out.println(AFR.getAllParsedLines());
+		
+		ArduinoUno.run(AFR.getAllParsedLines(), debugMode);
+	
+	
 		
 	}
 	
