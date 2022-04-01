@@ -13,8 +13,9 @@ public abstract class AbstractInstruction {
 	public abstract void run();
 
 
-	public abstract AbstractCPU run(AbstractCPU CPU);
-	
+
+
+	public abstract AbstractCPU run(AbstractCPU cpu, boolean debug);
 	
 	
 	

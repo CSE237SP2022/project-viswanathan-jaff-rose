@@ -1,2 +1,3 @@
-ADD r24, r25
-INC r23
+INC r29
+INC r29
+INC r29

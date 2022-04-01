@@ -92,6 +92,8 @@ public class ASMFileReader {
                 System.out.println(line);
             }
             sc.close();
+            
+            parseAllAssemblyLines();
 
         } catch (Exception e){
             System.out.println("File not found");

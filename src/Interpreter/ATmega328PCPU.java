@@ -3,13 +3,13 @@ package Interpreter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
-import Atmega328CPUInstructions.AbstractInstruction;
-import Atmega328CPUInstructions.INC;
+import Atmega328CPUInstructions.*;
 
 public class ATmega328PCPU extends AbstractCPU {
 	
-	private byte[] r_registers;
+	private HashMap<String, Byte> registers;
 	
 	//Special Registers
 	private byte SREG_register;
@@ -33,7 +33,34 @@ public class ATmega328PCPU extends AbstractCPU {
 	
 	
 	public ATmega328PCPU() {
-		this.r_registers = new byte[30];
+		
+		this.registers = new HashMap<String, Byte>();
+		
+		
+		this.registers.put("r28", (byte) 0);
+		this.registers.put("r29", (byte) 0);
+		
+		this.instructionMap = new HashMap<String, AbstractInstruction>();
+		
+		this.CPUStates = new LinkedList<AbstractCPU>();
+		
+		create_opcode_map();
+		
+	}
+	
+	
+	public ATmega328PCPU(ATmega328PCPU oldcpu) {
+
+		this.registers = new HashMap<String, Byte>(oldcpu.getRegisters());
+		this.instructionMap = new HashMap<String, AbstractInstruction>(oldcpu.getInstructionMap());
+		
+	}
+	
+	public ATmega328PCPU(HashMap<String, Byte> registers, LinkedList<AbstractCPU> CPUStates) {
+
+		this.registers = new HashMap<String, Byte>(registers);
+		
+		this.CPUStates = new LinkedList<AbstractCPU>(CPUStates);
 		
 		this.instructionMap = new HashMap<String, AbstractInstruction>();
 		
@@ -41,7 +68,17 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 	}
 	
-	public void run(String[][] instructions, boolean debugMode) {
+	
+	public HashMap<String, AbstractInstruction> getInstructionMap() {
+		return this.instructionMap;
+	}
+	
+	protected HashMap<String, Byte> getRegisters(){
+		return this.registers;
+	}
+
+
+	public void run(LinkedList<String[]> instructions, boolean debugMode) {
 		
 		if(debugMode) {
 			System.out.println(this.toString() + "\n");
@@ -54,7 +91,12 @@ public class ATmega328PCPU extends AbstractCPU {
 			String[] Args = pop_args(Line);
 			
 			InstructionToExecute.setArgs( Args );
-			InstructionToExecute.run(this);
+			this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, debugMode));
+			
+			//ATmega328PCPU oldCPU = new ATmega328PCPU(this.registers, this.CPUStates);
+			
+			//this.CPUStates.add(oldCPU);
+			
 			
 			if(debugMode) {
 				System.out.println(Arrays.toString(Line));
@@ -66,7 +108,8 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		
 	}
-	
+
+
 	private String[] pop_args(String[] line) {
 		
 		String [] args = new String[line.length-1];
@@ -79,6 +122,15 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 
+	private void updateCPU(ATmega328PCPU ATmega328PCPU) {
+		
+		this.registers = ATmega328PCPU.registers;
+		
+		
+		
+	}
+
+
 	public String toString() {
 		
 		StringBuilder debugString = new StringBuilder();
@@ -86,19 +138,25 @@ public class ATmega328PCPU extends AbstractCPU {
 		debugString.append("CPU Dump: \n");
 		
 		int registerNumber = 1;
-		for(byte register : this.r_registers) {
+		
+		int[] iarr = {0};
+		
+		this.registers.forEach((key, value) -> {
 			
-			debugString.append("r" + registerNumber + ": 0x");
-			debugString.append(String.format("%02X ", register));
+			 
+
+			debugString.append(key + ": 0x");
+			debugString.append(String.format("%02X ", value));
 			debugString.append("  ");
 
-			if(registerNumber % 6 == 0) {
+			if(iarr[0] % 6 == 0) {
 				debugString.append("\n");
 			}
 			
-			registerNumber++;
-			
-		}
+			iarr[0]++;
+		      
+		 });
+		
 		
 		return debugString.toString();
 		
@@ -107,9 +165,10 @@ public class ATmega328PCPU extends AbstractCPU {
 	@Override
 	public void setRegister(String register, byte value) {
 		
-		switch (register) {
-			case "r29":
-				this.r_registers[28] = value;
+		switch (register.substring(0,1)) {
+			case "r":
+				this.registers.put("r28", value);
+				return;
 			
 		}
 		
@@ -120,7 +179,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		switch (register) {
 		case "r29":
-			return this.r_registers[29];
+			return this.registers.get("r28");
 		
 		}
 		return 0;
@@ -132,7 +191,7 @@ public static void main(String[] args) {
 		
 		String [][] instructions = { {"INC", "r29" } };
 		
-		ArduinoUno.run(instructions, true);
+		//ArduinoUno.run(instructions, true);
 
 	}
 

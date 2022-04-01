@@ -4,7 +4,9 @@ import Interpreter.AbstractCPU;
 
 public class INC extends AbstractInstruction {
 	
-	public String registerIncremented;
+	private String registerIncremented;
+	
+	private AbstractCPU cpu;
 	
 	public INC() {
 		// TODO Auto-generated constructor stub
@@ -15,13 +17,27 @@ public class INC extends AbstractInstruction {
 	}
 	
 	@Override
-	public AbstractCPU run(AbstractCPU cpu) {
+	public AbstractCPU run(AbstractCPU cpu, boolean debug) {
+		
+		this.cpu = cpu;
+		
+		if(debug) {
+			printDebug( (byte)(this.cpu.getRegister(this.registerIncremented) + 1) );
+		}
 		
 		cpu.setRegister(this.registerIncremented, (byte)(cpu.getRegister(this.registerIncremented) + 1) );
 		
-		return cpu;
-		
+		return cpu;	
 	}
+	
+	private void printDebug(byte newVal) {
+		
+		System.out.println("Existing Value at register " + this.registerIncremented + ": " + this.cpu.getRegister(this.registerIncremented));
+		System.out.println("New Value at register " + this.registerIncremented + ": " + newVal);
+	
+	}
+	
+	
 	
 
 	
