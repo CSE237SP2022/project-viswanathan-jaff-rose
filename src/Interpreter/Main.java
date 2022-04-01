@@ -6,20 +6,10 @@ public class Main {
 		
 		boolean debugMode = false;
 		
-		System.out.println("\n"
-				+ "Usage:\n"
-				+ "  javaduino <AssemblyFile>\n"
-				+ "  naval_fate --version\n"
-				+ "\n"
-				+ "Options:\n"
-				+ "  -d            Invoke Debug Mode.\n"
-				);
-		
 		if(args.length < 1) {
 			System.out.println("\n"
 					+ "Usage:\n"
 					+ "  javaduino <AssemblyFile>\n"
-					+ "  naval_fate --version\n"
 					+ "\n"
 					+ "Options:\n"
 					+ "  -d            Invoke Debug Mode.\n"
