@@ -1,2 +1,3 @@
 #!/bin/bash
-java src/Interpreter/ASMFileReader.java "$1"
+javac -d bin/ src/Interpreter/*.java
+java -cp bin Interpreter.Main "$1"
