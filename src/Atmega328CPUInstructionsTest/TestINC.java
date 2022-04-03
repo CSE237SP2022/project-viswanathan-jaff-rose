@@ -24,7 +24,11 @@ public class TestINC {
 		
 		System.out.println(AFR.getAllParsedLines());
 		
-		ArduinoUno.run(AFR.getAllParsedLines(), false);
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		assertEquals(ArduinoUno.getRegister("r29"), 1);
 		
@@ -42,7 +46,12 @@ public class TestINC {
 		
 		System.out.println(AFR.getAllParsedLines());
 		
-		ArduinoUno.run(AFR.getAllParsedLines(), false);
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(ArduinoUno.getRegister("r29"), 2);
 		
@@ -58,11 +67,16 @@ public class TestINC {
 		
 		System.out.println(AFR.getAllParsedLines());
 		
-		ArduinoUno.run(AFR.getAllParsedLines(), false);
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		assertEquals(ArduinoUno.getRegister("r27"), 1);
-		assertEquals(ArduinoUno.getRegister("r28"), 1);
-		assertEquals(ArduinoUno.getRegister("r29"), 1);
+		assertEquals(1, ArduinoUno.getRegister("r27"));
+		assertEquals(1, ArduinoUno.getRegister("r28"));
+		assertEquals(1, ArduinoUno.getRegister("r29"));
 		
 	}
 	
@@ -76,23 +90,48 @@ public class TestINC {
 		
 		System.out.println(AFR.getAllParsedLines());
 		
-		ArduinoUno.run(AFR.getAllParsedLines(), false);
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		assertEquals(ArduinoUno.getRegister("r16"), 1);
-		assertEquals(ArduinoUno.getRegister("r17"), 1);
-		assertEquals(ArduinoUno.getRegister("r18"), 1);
-		assertEquals(ArduinoUno.getRegister("r19"), 1);
-		assertEquals(ArduinoUno.getRegister("r20"), 1);
-		assertEquals(ArduinoUno.getRegister("r21"), 1);
-		assertEquals(ArduinoUno.getRegister("r22"), 1);
-		assertEquals(ArduinoUno.getRegister("r23"), 1);
-		assertEquals(ArduinoUno.getRegister("r24"), 1);
-		assertEquals(ArduinoUno.getRegister("r25"), 1);
-		assertEquals(ArduinoUno.getRegister("r26"), 1);
-		assertEquals(ArduinoUno.getRegister("r27"), 1);
-		assertEquals(ArduinoUno.getRegister("r28"), 1);
-		assertEquals(ArduinoUno.getRegister("r29"), 1);
+		assertEquals(1, ArduinoUno.getRegister("r16"));
+		assertEquals(1, ArduinoUno.getRegister("r17"));
+		assertEquals(1, ArduinoUno.getRegister("r18"));
+		assertEquals(1, ArduinoUno.getRegister("r19"));
+		assertEquals(1, ArduinoUno.getRegister("r20"));
+		assertEquals(1, ArduinoUno.getRegister("r21"));
+		assertEquals(1, ArduinoUno.getRegister("r22"));
+		assertEquals(1, ArduinoUno.getRegister("r23"));
+		assertEquals(1, ArduinoUno.getRegister("r24"));
+		assertEquals(1, ArduinoUno.getRegister("r25"));
+		assertEquals(1, ArduinoUno.getRegister("r26"));
+		assertEquals(1, ArduinoUno.getRegister("r27"));
+		assertEquals(1, ArduinoUno.getRegister("r28"));
+		assertEquals(1, ArduinoUno.getRegister("r29"));
 		
+	}
+	
+	@Test
+	void testINC_Overflow() {
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCOverflow.S");
+		
+		AFR.read();
+		
+		AbstractCPU ArduinoUno = new ATmega328PCPU();
+		
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(1, ArduinoUno.getRegister("V"));
+		assertEquals(0xFF, ArduinoUno.getRegister("r29"));
+	
 	}
 
 }

@@ -11,16 +11,6 @@ public class ATmega328PCPU extends AbstractCPU {
 	
 	private HashMap<String, Byte> registers;
 	
-	//Special Registers
-	private byte SREG_register;
-	private byte C_register;
-	private byte Z_register;
-	private byte N_register;
-	private byte V_register;
-	private byte S_register;
-	private byte H_register;
-	private byte T_register;
-	private byte I_register;
 	
 	private HashMap<String, AbstractInstruction> instructionMap;
 	
@@ -29,6 +19,7 @@ public class ATmega328PCPU extends AbstractCPU {
 	private void create_opcode_map() {
 		
 		this.instructionMap.put("INC", new INC());
+		this.instructionMap.put("LDI", new LDI());
 	}
 	
 	
@@ -36,7 +27,15 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		this.registers = new HashMap<String, Byte>();
 		
-		
+		this.registers.put("C", (byte) 0);
+		this.registers.put("Z", (byte) 0);
+		this.registers.put("N", (byte) 0);
+		this.registers.put("V", (byte) 0);
+		this.registers.put("S", (byte) 0);
+		this.registers.put("H", (byte) 0);
+		this.registers.put("T", (byte) 0);
+		this.registers.put("I", (byte) 0);
+		this.registers.put("SREG", (byte) 0);
 		this.registers.put("r28", (byte) 0);
 		this.registers.put("r29", (byte) 0);
 		
@@ -78,7 +77,7 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 
-	public void run(LinkedList<String[]> instructions, boolean debugMode) {
+	public void run(LinkedList<String[]> instructions, boolean debugMode) throws Exception {
 		
 		if(debugMode) {
 			System.out.println(this.toString() + "\n");
@@ -87,6 +86,10 @@ public class ATmega328PCPU extends AbstractCPU {
 		for(String [] Line : instructions) {
 			
 			AbstractInstruction InstructionToExecute = instructionMap.get(Line[0]);
+			
+			if(InstructionToExecute == null) {
+				throw new Exception("Invalid Instruction " + "\"" + Line[0] + "\"" + " Specified");
+			}
 			
 			String[] Args = pop_args(Line);
 			
