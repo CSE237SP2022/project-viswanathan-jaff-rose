@@ -9,7 +9,8 @@ public class INC extends AbstractInstruction {
 	private AbstractCPU cpu;
 	
 	public INC() {
-		// TODO Auto-generated constructor stub
+		this.opcode = "INC";
+		this.CPU = "Atmega328P";
 	}
 	
 	public void setArgs(String[] args) {

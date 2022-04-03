@@ -5,7 +5,8 @@ import Interpreter.AbstractCPU;
 public class LDI extends AbstractInstruction {
 
 	public LDI() {
-		// TODO Auto-generated constructor stub
+		this.opcode = "LDI";
+		this.CPU = "Atmega328P";
 	}
 
 	@Override

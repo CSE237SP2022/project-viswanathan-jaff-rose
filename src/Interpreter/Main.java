@@ -38,7 +38,12 @@ public class Main {
 		
 		System.out.println(AFR.getAllParsedLines());
 		
-		ArduinoUno.run(AFR.getAllParsedLines(), debugMode);
+		try {
+			ArduinoUno.run(AFR.getAllParsedLines(), debugMode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 	
 		

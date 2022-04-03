@@ -27,17 +27,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		this.registers = new HashMap<String, Byte>();
 		
-		this.registers.put("C", (byte) 0);
-		this.registers.put("Z", (byte) 0);
-		this.registers.put("N", (byte) 0);
-		this.registers.put("V", (byte) 0);
-		this.registers.put("S", (byte) 0);
-		this.registers.put("H", (byte) 0);
-		this.registers.put("T", (byte) 0);
-		this.registers.put("I", (byte) 0);
-		this.registers.put("SREG", (byte) 0);
-		this.registers.put("r28", (byte) 0);
-		this.registers.put("r29", (byte) 0);
+		map_registers();
 		
 		this.instructionMap = new HashMap<String, AbstractInstruction>();
 		
@@ -48,6 +38,29 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 	
 	
+	private void map_registers() {
+		
+		String [] rRegisterArray = {"r16","r17","r18","r19","r20","r21","r22","r23","r24","r25","r26","r27","r28","r29","r30","r31","r32"};
+		
+		this.registers.put("C", (byte) 0);
+		this.registers.put("Z", (byte) 0);
+		this.registers.put("N", (byte) 0);
+		this.registers.put("V", (byte) 0);
+		this.registers.put("S", (byte) 0);
+		this.registers.put("H", (byte) 0);
+		this.registers.put("T", (byte) 0);
+		this.registers.put("I", (byte) 0);
+		this.registers.put("SREG", (byte) 0);
+		
+		for(String rRegister : rRegisterArray) {
+		
+			this.registers.put(rRegister, (byte) 0);
+
+		}
+		
+	}
+
+
 	public ATmega328PCPU(ATmega328PCPU oldcpu) {
 
 		this.registers = new HashMap<String, Byte>(oldcpu.getRegisters());
@@ -96,10 +109,8 @@ public class ATmega328PCPU extends AbstractCPU {
 			InstructionToExecute.setArgs( Args );
 			this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, debugMode));
 			
-			//ATmega328PCPU oldCPU = new ATmega328PCPU(this.registers, this.CPUStates);
-			
-			//this.CPUStates.add(oldCPU);
-			
+			ATmega328PCPU oldCPU = new ATmega328PCPU(this.registers, this.CPUStates);
+			this.CPUStates.add(oldCPU);
 			
 			if(debugMode) {
 				System.out.println(Arrays.toString(Line));
@@ -107,8 +118,6 @@ public class ATmega328PCPU extends AbstractCPU {
 			}
 			
 		}
-		
-		
 		
 	}
 
@@ -169,8 +178,8 @@ public class ATmega328PCPU extends AbstractCPU {
 	public void setRegister(String register, byte value) {
 		
 		switch (register.substring(0,1)) {
-			case "r":
-				this.registers.put("r28", value);
+			default:
+				this.registers.put(register, value);
 				return;
 			
 		}
@@ -180,13 +189,24 @@ public class ATmega328PCPU extends AbstractCPU {
 	@Override
 	public byte getRegister(String register) {
 		
+		System.out.println("getting register: " + register);
+		
 		switch (register) {
-		case "r29":
-			return this.registers.get("r28");
+		default:
+			return this.registers.get(register);
 		
 		}
-		return 0;
 	}
+	
+	public HashMap<String, Byte> getRegisterMap() {
+		return this.registers;
+	}
+	
+	public HashMap<String, AbstractInstruction> getSupportedInstructions() {
+		return this.instructionMap;
+	}
+	
+	
 	
 public static void main(String[] args) {
 		
