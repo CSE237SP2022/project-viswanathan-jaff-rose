@@ -2,6 +2,9 @@ package Test;
 
 import  org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
