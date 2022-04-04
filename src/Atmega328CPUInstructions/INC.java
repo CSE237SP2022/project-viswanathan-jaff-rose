@@ -1,6 +1,7 @@
 package Atmega328CPUInstructions;
 
 import Interpreter.AbstractCPU;
+import Interpreter.AbstractInstruction;
 
 public class INC extends AbstractInstruction {
 	
