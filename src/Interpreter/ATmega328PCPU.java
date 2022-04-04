@@ -15,6 +15,7 @@ public class ATmega328PCPU extends AbstractCPU {
 	private HashMap<String, AbstractInstruction> instructionMap;
 	
 	private LinkedList<AbstractCPU> CPUStates;
+
 	
 	private void create_opcode_map() {
 		
@@ -90,9 +91,9 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 
-	public void run(LinkedList<String[]> instructions, boolean debugMode) throws Exception {
+	public void run(LinkedList<String[]> instructions) throws Exception {
 		
-		if(debugMode) {
+		if(this.debugFlag) {
 			System.out.println(this.toString() + "\n");
 		}
 		
@@ -107,12 +108,12 @@ public class ATmega328PCPU extends AbstractCPU {
 			String[] Args = pop_args(Line);
 			
 			InstructionToExecute.setArgs( Args );
-			this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, debugMode));
+			this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
 			
 			ATmega328PCPU oldCPU = new ATmega328PCPU(this.registers, this.CPUStates);
 			this.CPUStates.add(oldCPU);
 			
-			if(debugMode) {
+			if(this.debugFlag) {
 				System.out.println(Arrays.toString(Line));
 				System.out.println(this.toString() + "\n");
 			}
@@ -137,7 +138,6 @@ public class ATmega328PCPU extends AbstractCPU {
 	private void updateCPU(ATmega328PCPU ATmega328PCPU) {
 		
 		this.registers = ATmega328PCPU.registers;
-		
 		
 		
 	}

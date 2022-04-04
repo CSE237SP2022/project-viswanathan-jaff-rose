@@ -26,6 +26,16 @@ public class INC extends AbstractInstruction {
 			printDebug( (byte)(this.cpu.getRegister(this.registerIncremented) + 1) );
 		}
 		
+		if(cpu.getRegister(this.registerIncremented) == 0x7F) {
+			
+			cpu.setRegister(this.registerIncremented, (byte)(cpu.getRegister(this.registerIncremented) + 1) );
+			
+			cpu.setRegister("V", (byte) 1);
+			
+			return cpu;
+			
+		}
+		
 		cpu.setRegister(this.registerIncremented, (byte)(cpu.getRegister(this.registerIncremented) + 1) );
 		
 		return cpu;	

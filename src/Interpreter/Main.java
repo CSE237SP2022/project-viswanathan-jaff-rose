@@ -36,10 +36,10 @@ public class Main {
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
-		System.out.println(AFR.getAllParsedLines());
+		ArduinoUno.enableDebug(debugMode);
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines(), debugMode);
+			ArduinoUno.run(AFR.getAllParsedLines());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
