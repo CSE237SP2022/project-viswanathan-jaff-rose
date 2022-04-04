@@ -1,7 +1,4 @@
-package Atmega328CPUInstructions;
-
-
-import Interpreter.AbstractCPU;
+package Interpreter;
 
 public abstract class AbstractInstruction {
 	

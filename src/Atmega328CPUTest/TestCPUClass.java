@@ -2,17 +2,18 @@ package Atmega328CPUTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import Atmega328CPUInstructions.AbstractInstruction;
 import Atmega328CPUInstructions.INC;
 import Atmega328CPUInstructions.LDI;
 import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
+import Interpreter.AbstractInstruction;
 
 public class TestCPUClass {
 
@@ -65,6 +66,28 @@ public class TestCPUClass {
 		System.out.println(ArduinoUno.getSupportedInstructions().toString());
 
 		assertTrue(expectedInstructionMap.equals(ArduinoUno.getSupportedInstructions()));
+	}
+	
+	@Test
+	void testCPUGetandSetRegisterSimple() {
+		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
+		
+		ArduinoUno.setRegister("r29", (byte) 0x8E);
+		
+		
+		if(ArduinoUno.getRegister("r29") != (byte) 0x8E) {
+			fail("Error, register Was not set to correct value");
+		}
+		
+	
+		
+		
+	}
+	
+	void testCPUGetandSetInvalidRegister() {
+		
+		
+		
 	}
 	
 	
