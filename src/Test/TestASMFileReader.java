@@ -1,5 +1,7 @@
 package Test;
 
+import  org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -9,7 +11,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
+
 
 import Interpreter.ASMFileReader;
 
