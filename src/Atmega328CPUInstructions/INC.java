@@ -1,5 +1,6 @@
 package Atmega328CPUInstructions;
 
+import Interpreter.AbstractInstructionType;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
 
@@ -12,6 +13,7 @@ public class INC extends AbstractInstruction {
 	public INC() {
 		this.opcode = "INC";
 		this.CPU = "Atmega328P";
+		this.type = AbstractInstructionType.HWInstruction;
 	}
 	
 	public void setArgs(String[] args) {

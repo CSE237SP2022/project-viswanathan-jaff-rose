@@ -6,6 +6,8 @@ public abstract class AbstractInstruction {
 	
 	protected String CPU;
 	
+	protected AbstractInstructionType type;
+	
 	public abstract void setArgs(String[] args);
 		
 	public abstract void run();
@@ -15,6 +17,10 @@ public abstract class AbstractInstruction {
 	public String getOpcode() {
 		return this.opcode;
 	}
+	
+	public AbstractInstructionType getType() {
+		return this.type;
+	}
 
 	@Override
 	public int hashCode() {
@@ -22,6 +28,7 @@ public abstract class AbstractInstruction {
 		int result = 1;
 		result = prime * result + ((CPU == null) ? 0 : CPU.hashCode());
 		result = prime * result + ((opcode == null) ? 0 : opcode.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -43,6 +50,8 @@ public abstract class AbstractInstruction {
 			if (other.opcode != null)
 				return false;
 		} else if (!opcode.equals(other.opcode))
+			return false;
+		if (type != other.type)
 			return false;
 		return true;
 	}

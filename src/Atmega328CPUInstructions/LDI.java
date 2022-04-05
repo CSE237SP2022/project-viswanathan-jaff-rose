@@ -2,12 +2,14 @@ package Atmega328CPUInstructions;
 
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
+import Interpreter.AbstractInstructionType;
 
 public class LDI extends AbstractInstruction {
 
 	public LDI() {
 		this.opcode = "LDI";
 		this.CPU = "Atmega328P";
+		this.type = AbstractInstructionType.HWInstruction;
 	}
 
 	@Override

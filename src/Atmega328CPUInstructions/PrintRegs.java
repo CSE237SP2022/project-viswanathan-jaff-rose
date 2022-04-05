@@ -1,5 +1,6 @@
-package Atmega328CPUMacros;
+package Atmega328CPUInstructions;
 
+import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
 
@@ -23,8 +24,10 @@ public class PrintRegs extends AbstractInstruction {
 
 	@Override
 	public AbstractCPU run(AbstractCPU cpu, boolean debug) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		HashMap<String, Byte> regsmap = ((ATmega328PCPU) cpu).getRegisters();
+		
+		return cpu;
 	}
 
 }
