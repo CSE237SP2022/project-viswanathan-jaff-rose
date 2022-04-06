@@ -12,10 +12,6 @@ public class ParsingUtils {
 	    	throw new Exception("Invalid Constant '"+ potentialConstant +"' Specified");
 	    }
 	    
-	    System.out.print("Group 0: " + matcher.group(0));
-	    System.out.print(" Group 1: " + matcher.group(1));
-	    System.out.println(" Group 2: " + matcher.group(2));
-	    
 	    if(matcher.group(1) != null) {
 	    	return Byte.parseByte(matcher.group(2), 16);
 	    }

@@ -8,8 +8,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import Atmega328CPUInstructions.INC;
-import Atmega328CPUInstructions.LDI;
+import Atmega328CPUInstructions.*;
 import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
@@ -61,6 +60,7 @@ public class TestCPUClass {
 		
 		expectedInstructionMap.put("INC", new INC());
 		expectedInstructionMap.put("LDI", new LDI());
+		expectedInstructionMap.put("@@printregs", new PrintRegs());
 		
 		System.out.println(expectedInstructionMap.toString());
 		System.out.println(ArduinoUno.getSupportedInstructions().toString());
