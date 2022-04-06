@@ -21,6 +21,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		this.instructionMap.put("INC", new INC());
 		this.instructionMap.put("LDI", new LDI());
+		this.instructionMap.put("@@printregs", new PrintRegs());
 	}
 	
 	
@@ -110,13 +111,12 @@ public class ATmega328PCPU extends AbstractCPU {
 			InstructionToExecute.setArgs( Args );
 			
 			switch(InstructionToExecute.getType()) {
-			
-			case HWInstruction:
-				this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
-				break;
-			case Macro:
-				this.runMacro(InstructionToExecute.getOpcode());
-				break;
+				case HWInstruction:
+					this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
+					break;
+				case Macro:
+					this.runMacro(InstructionToExecute.getOpcode());
+					break;
 			} 
 
 			

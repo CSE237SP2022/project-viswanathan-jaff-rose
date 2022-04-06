@@ -6,19 +6,17 @@ public abstract class AbstractInstruction {
 	
 	protected String CPU;
 	
-	protected AbstractInstructionType type;
+	protected InstructionType type;
 	
 	public abstract void setArgs(String[] args);
-		
-	public abstract void run();
 
-	public abstract AbstractCPU run(AbstractCPU cpu, boolean debug);
+	public abstract AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception;
 	
 	public String getOpcode() {
 		return this.opcode;
 	}
 	
-	public AbstractInstructionType getType() {
+	public InstructionType getType() {
 		return this.type;
 	}
 

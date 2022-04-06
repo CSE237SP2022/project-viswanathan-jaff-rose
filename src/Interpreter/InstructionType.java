@@ -1,6 +1,6 @@
 package Interpreter;
 
-public enum AbstractInstructionType {
+public enum InstructionType {
 	HWInstruction,
 	Macro
 }
