@@ -11,7 +11,7 @@ public abstract class AbstractCPU {
 
 	public abstract void run(LinkedList<String[]> instructions) throws Exception;
 	
-	public abstract void setRegister(String register, byte value);
+	public abstract void setRegister(String register, byte value) throws Exception;
 
 	public abstract byte getRegister(String register);
 	
