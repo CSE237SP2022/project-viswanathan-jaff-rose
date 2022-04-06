@@ -21,13 +21,13 @@ public class TestADD {
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         System.out.println(AFR.getAllParsedLines());
 
-        int oldDest = (byte)ArduinoUno.getRegister("r29")
+        int oldDest = (byte)ArduinoUno.getRegister("r29");
         try {
             ArduinoUno.run(AFR.getAllParsedLines());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int correctVal = (byte)ArduinoUno.getRegister("r28") + oldDest
+        int correctVal = (byte)ArduinoUno.getRegister("r28") + oldDest;
         assertEquals(ArduinoUno.getRegister("r29"), correctVal);
     }
 

@@ -27,7 +27,7 @@ public class ADD extends AbstractInstruction {
         }
 
         int result = (byte)this.destRegister + (byte)this.srcRegister;
-        cpu.setRegister(this.destRegister, (byte)result)
+        cpu.setRegister(this.destRegister, (byte)result);
         return cpu;
     }
 
