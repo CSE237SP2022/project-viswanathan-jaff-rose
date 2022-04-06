@@ -67,7 +67,7 @@ public class ASMFileReader {
 		try {
             Scanner sc = new Scanner(this.file);
             
-            // System.out.println(sc);
+            //System.out.println(sc);
             
             String fileName = this.file.toString();
             boolean validFile = false;
@@ -81,7 +81,7 @@ public class ASMFileReader {
             }
 
             if(!validFile){
-                System.out.println("INVALID FILE TYPE!");
+                throw new Exception("INVALID FILE TYPE");
             }
 
             while (sc.hasNextLine()) {
@@ -96,7 +96,7 @@ public class ASMFileReader {
             parseAllAssemblyLines();
 
         } catch (Exception e){
-            System.out.println("File not found");
+            System.out.println(e);
         }
 		
 	}
@@ -104,10 +104,19 @@ public class ASMFileReader {
 	public String[] parseAssemblyLine( String lineOfAssembly ) {
 		int indexOfString = 0;
 		String opCode = "";
+		
+		
 		while( lineOfAssembly.charAt(indexOfString) != ' ' ) {
 			opCode += lineOfAssembly.charAt(indexOfString);
 			indexOfString++;
+			
+			if( indexOfString == lineOfAssembly.length()) {
+				break;
+			}
+			
 		}
+		
+		
 		lineOfAssembly = lineOfAssembly.substring(indexOfString);
 		lineOfAssembly = lineOfAssembly.replaceAll(" ", "");
 		String[] arrayOfParameters = lineOfAssembly.split(",");

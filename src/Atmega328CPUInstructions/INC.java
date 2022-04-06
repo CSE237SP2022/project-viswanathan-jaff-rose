@@ -1,5 +1,6 @@
 package Atmega328CPUInstructions;
 
+import Interpreter.InstructionType;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
 
@@ -12,6 +13,7 @@ public class INC extends AbstractInstruction {
 	public INC() {
 		this.opcode = "INC";
 		this.CPU = "Atmega328P";
+		this.type = InstructionType.HWInstruction;
 	}
 	
 	public void setArgs(String[] args) {
@@ -19,7 +21,7 @@ public class INC extends AbstractInstruction {
 	}
 	
 	@Override
-	public AbstractCPU run(AbstractCPU cpu, boolean debug) {
+	public AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception {
 		
 		this.cpu = cpu;
 		
@@ -48,6 +50,7 @@ public class INC extends AbstractInstruction {
 		System.out.println("New Value at register " + this.registerIncremented + ": " + newVal);
 	
 	}
+
 	
 	
 	

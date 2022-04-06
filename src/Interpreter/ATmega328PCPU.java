@@ -21,6 +21,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		this.instructionMap.put("INC", new INC());
 		this.instructionMap.put("LDI", new LDI());
+		this.instructionMap.put("@@printregs", new PrintRegs());
 	}
 	
 	
@@ -86,7 +87,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		return this.instructionMap;
 	}
 	
-	protected HashMap<String, Byte> getRegisters(){
+	public HashMap<String, Byte> getRegisters(){
 		return this.registers;
 	}
 
@@ -108,7 +109,18 @@ public class ATmega328PCPU extends AbstractCPU {
 			String[] Args = pop_args(Line);
 			
 			InstructionToExecute.setArgs( Args );
-			this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
+			
+			switch(InstructionToExecute.getType()) {
+				case HWInstruction:
+					this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
+					break;
+				case Macro:
+					this.runMacro(InstructionToExecute.getOpcode());
+					break;
+			} 
+
+			
+			
 			
 			ATmega328PCPU oldCPU = new ATmega328PCPU(this.registers, this.CPUStates);
 			this.CPUStates.add(oldCPU);
@@ -118,6 +130,22 @@ public class ATmega328PCPU extends AbstractCPU {
 				System.out.println(this.toString() + "\n");
 			}
 			
+		}
+		
+	}
+
+
+	private void runMacro(String opcode) throws Exception {
+		
+		
+		switch(opcode) {
+		
+		case "@@printregs":
+			System.out.println(this.toString());
+			return;
+			
+		default:
+			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
 		}
 		
 	}
@@ -147,32 +175,48 @@ public class ATmega328PCPU extends AbstractCPU {
 		
 		StringBuilder debugString = new StringBuilder();
 		
-		debugString.append("CPU Dump: \n");
+		StringBuilder specialRegs = new StringBuilder();
 		
-		int registerNumber = 1;
+		debugString.append("Registers: \n");
 		
-		int[] iarr = {0};
+		int[] rRegcounter = {0};
+		
+		int[] sRegCounter = {0};
 		
 		this.registers.forEach((key, value) -> {
 			
-			 
-
-			debugString.append(key + ": 0x");
-			debugString.append(String.format("%02X ", value));
-			debugString.append("  ");
-
-			if(iarr[0] % 6 == 0) {
-				debugString.append("\n");
+			if(key.substring(0,1).equals("r")) {
+				debugString.append(key + ": 0x");
+				debugString.append(String.format("%02X ", value));
+				debugString.append("  ");
+				
+				if(rRegcounter[0] % 6 == 5) {
+					debugString.append("\n");
+				}
+				rRegcounter[0]++;
+				
 			}
-			
-			iarr[0]++;
-		      
+			else {
+				specialRegs.append(key + ": 0x");
+				specialRegs.append(String.format("%02X ", value));
+				specialRegs.append("  ");
+
+				if(sRegCounter[0] % 6 == 5) {
+					specialRegs.append("\n");
+				}
+				sRegCounter[0]++;
+			}
+
 		 });
 		
+		debugString.append("\n Special Reigsters: \n");
+		
+		debugString.append(specialRegs);
 		
 		return debugString.toString();
 		
 	}
+
 
 	@Override
 	public void setRegister(String register, byte value) {
