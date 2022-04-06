@@ -21,7 +21,12 @@ public class ADD extends AbstractInstruction {
     @Override
     public AbstractCPU run(AbstractCPU cpu, boolean debug) {
         this.cpu = cpu;
-        int result = (int)this.destRegister + (int)this.srcRegister;
+
+        if(debug) {
+            printDebug( (byte)(this.cpu.getRegister(this.srcRegister) );
+        }
+
+        int result = (byte)this.destRegister + (byte)this.srcRegister;
         cpu.setRegister(this.destRegister, (byte)result)
         return cpu;
     }
