@@ -22,6 +22,7 @@ public class TestASMFileReader {
 		try {
 			ASMFileReader AFR = new ASMFileReader();
 		} catch (Exception e) {
+			System.out.println(e);
 			fail("Unable to construct empty ASMFileReader");
 		}
 	}
@@ -34,6 +35,7 @@ public class TestASMFileReader {
 			assertTrue(AFR.getFilepath().equals("src/Test/Test.S"));
 			
 		} catch (Exception e) {
+			System.out.println(e);
 			fail("Unable to construct ASMFileReader with fed in filepath");
 		}
 	}
@@ -55,7 +57,8 @@ public class TestASMFileReader {
 			
 			
 		} catch (Exception e) {
-			fail("Error occured during file reading");
+			System.out.println(e);
+			fail("Error occured during test");
 		}
 	}
 	
@@ -88,8 +91,6 @@ public class TestASMFileReader {
 			listOfParsedLines.add(completedParseOne);
 			listOfParsedLines.add(completedParseTwo);
 			
-			AFR.parseAllAssemblyLines();
-			
 			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
 			
 			
@@ -103,7 +104,42 @@ public class TestASMFileReader {
 			
 			
 		} catch (Exception e) {
-			fail("Error occured during file reading");
+			System.out.println(e);
+			
+			fail("Error occured during test");
+		}
+		
+			
+		
+		
+	}
+	
+	
+	
+	@Test
+	void test_macro_parse() {
+		
+		try {
+			
+			ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/PrintRegsBasic.S");
+			AFR.read();    
+			String[] completedParseOne= {"@@printregs", ""};
+			LinkedList<String[]> listOfParsedLines = new LinkedList<>();
+			listOfParsedLines.add(completedParseOne);
+			
+			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			
+			
+			for( int i = 0; i < returnedLines.size(); i++ ) {
+				for( int j = 0; j < returnedLines.get(i).length; j++ ) {
+					assertTrue( listOfParsedLines.get(i)[j].equals(returnedLines.get(i)[j]));
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			fail("Error occured during test");
 		}
 		
 			
