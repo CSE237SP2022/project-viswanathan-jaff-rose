@@ -1,2 +1,2 @@
-LDI r29 0x7F
+LDI r29, 0x7F
 INC r29
