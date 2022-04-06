@@ -112,7 +112,7 @@ public class ATmega328PCPU extends AbstractCPU {
 			
 			switch(InstructionToExecute.getType()) {
 				case HWInstruction:
-					this.updateCPU((ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
+					this.updateCPU( (ATmega328PCPU) InstructionToExecute.run(this, this.debugFlag));
 					break;
 				case Macro:
 					this.runMacro(InstructionToExecute.getOpcode());
@@ -163,9 +163,9 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 
-	private void updateCPU(ATmega328PCPU ATmega328PCPU) {
+	private void updateCPU(ATmega328PCPU ArduinoUno) {
 		
-		this.registers = ATmega328PCPU.registers;
+		this.registers = ArduinoUno.registers;
 		
 		
 	}
@@ -235,8 +235,10 @@ public class ATmega328PCPU extends AbstractCPU {
 	@Override
 	public byte getRegister(String register) {
 		
-		System.out.println("getting register: " + register);
-		
+		if(this.debugFlag) {
+			System.out.println("Getting register: " + register);
+		}
+
 		switch (register) {
 		default:
 			return this.registers.get(register);

@@ -1,3 +1,4 @@
+LDI r29, 0x34
 INC r29
-INC r29
-INC r29
+LDI r28, 0x4E
+INC r28
