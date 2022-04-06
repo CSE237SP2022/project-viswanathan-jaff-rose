@@ -219,14 +219,16 @@ public class ATmega328PCPU extends AbstractCPU {
 
 
 	@Override
-	public void setRegister(String register, byte value) {
+	public void setRegister(String register, byte value) throws Exception {
 		
-		switch (register.substring(0,1)) {
-			default:
-				this.registers.put(register, value);
-				return;
-			
+		if(!this.registers.containsKey(register)) {
+			throw new Exception("Invalid Register '" + register + "' specified");
 		}
+
+		this.registers.put(register, value);
+		return;
+			
+
 		
 	}
 	

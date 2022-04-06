@@ -8,7 +8,7 @@ public abstract class AbstractInstruction {
 	
 	protected InstructionType type;
 	
-	public abstract void setArgs(String[] args);
+	public abstract void setArgs(String[] args) throws Exception;
 
 	public abstract AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception;
 	
