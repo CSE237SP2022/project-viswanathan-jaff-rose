@@ -72,11 +72,15 @@ public class TestCPUClass {
 	void testCPUGetandSetRegisterSimple() {
 		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
 		
-		ArduinoUno.setRegister("r29", (byte) 0x8E);
+		try {
+			ArduinoUno.setRegister("r29", (byte) 0x8E);
+		} catch (Exception e) {
+			fail("Failed to set register");
+		}
 		
 		
 		if(ArduinoUno.getRegister("r29") != (byte) 0x8E) {
-			fail("Error, register Was not set to correct value");
+			fail("Unable to get correct register value");
 		}
 		
 	
@@ -84,7 +88,19 @@ public class TestCPUClass {
 		
 	}
 	
-	void testCPUGetandSetInvalidRegister() {
+	@Test
+	void testCPUSetInvalidRegister() {
+		
+		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
+		
+		try {
+			ArduinoUno.setRegister("ZMM0", (byte) 0x7B);
+			fail("Allowed Register to be written to invalid ZMM0 register");
+		} catch (Exception e) {
+
+		}
+		
+		
 		
 		
 		
