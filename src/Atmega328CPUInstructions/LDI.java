@@ -25,7 +25,7 @@ public class LDI extends AbstractInstruction {
 	public void setArgs(String[] args) throws Exception {	
 		
 		if(args.length != 2) {			
-			throw new Exception("Incorrect Number of Arguments specified, was " + this.args.length + " expected 2");
+			throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
 		}
 		
 		this.registerToBeLoaded = args[0];

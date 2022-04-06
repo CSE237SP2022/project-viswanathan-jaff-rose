@@ -129,8 +129,8 @@ public class TestINC {
 			e.printStackTrace();
 		}
 		
-		assertEquals(1, ArduinoUno.getRegister("V"));
-		assertEquals(0xFF, ArduinoUno.getRegister("r29"));
+		assertEquals(ArduinoUno.getRegister("V"), 1);
+		assertEquals(ArduinoUno.getRegister("r29"), -128);
 	
 	}
 
