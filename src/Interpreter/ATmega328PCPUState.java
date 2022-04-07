@@ -102,9 +102,15 @@ public class ATmega328PCPUState extends AbstractCPUState {
 		return debugString.toString();
 	}
 
-	public void setRegister(String register, byte value) {
-		this.registers.put(register, value);
-		return;
+	public void setRegister(String register, byte value) throws Exception {
+		
+		if(this.registers.containsKey(register)) {
+			this.registers.put(register, value);
+			return;
+		}
+
+		throw new Exception("Attempted to Write to Invalid Register '" + register + "'");
+	
 		
 	}
 

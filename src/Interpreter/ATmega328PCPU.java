@@ -24,8 +24,6 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	public ATmega328PCPU() {
 
-		map_registers();
-
 		this.instructionMap = new HashMap<String, AbstractInstruction>();
 
 		this.CPUStates = new LinkedList<ATmega328PCPUState>();
@@ -33,10 +31,6 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.currentState = new ATmega328PCPUState();
 
 		create_opcode_map();
-
-	}
-
-	private void map_registers() {
 
 	}
 
@@ -178,14 +172,5 @@ public class ATmega328PCPU extends AbstractCPU {
 		return this.instructionMap;
 	}
 
-	public static void main(String[] args) {
-
-		AbstractCPU ArduinoUno = new ATmega328PCPU();
-
-		String[][] instructions = { { "INC", "r29" } };
-
-		// ArduinoUno.run(instructions, true);
-
-	}
 
 }
