@@ -3,3 +3,4 @@ INC r29
 LDI r28, 0x4E
 ADD r29, r28
 INC r29
+@@printregs

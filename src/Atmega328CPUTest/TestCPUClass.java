@@ -60,7 +60,9 @@ public class TestCPUClass {
 		
 		expectedInstructionMap.put("INC", new INC());
 		expectedInstructionMap.put("LDI", new LDI());
+		expectedInstructionMap.put("ADD", new ADD());
 		expectedInstructionMap.put("@@printregs", new PrintRegs());
+		
 		
 		System.out.println(expectedInstructionMap.toString());
 		System.out.println(ArduinoUno.getSupportedInstructions().toString());
