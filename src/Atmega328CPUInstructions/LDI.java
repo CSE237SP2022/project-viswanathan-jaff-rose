@@ -3,7 +3,9 @@ package Atmega328CPUInstructions;
 import java.util.Arrays;
 import java.util.regex.*;
 
+import Interpreter.ATmega328PCPUState;
 import Interpreter.AbstractCPU;
+import Interpreter.AbstractCPUState;
 import Interpreter.AbstractInstruction;
 import Interpreter.InstructionType;
 import Utils.ParsingUtils;
@@ -39,15 +41,14 @@ public class LDI extends AbstractInstruction {
 		this.args = args;
 	}
 
-	@Override
-	public AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception{
+	public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
 		if(debug) {
 			System.out.println("Args: " + Arrays.toString(args));
 		}
 		
-		cpu.setRegister(this.registerToBeLoaded, this.immediateValue.byteValue());
+		cpustate.setRegister(this.registerToBeLoaded, this.immediateValue.byteValue());
 		
-		return cpu;
+		return cpustate;
 	}
 
 }

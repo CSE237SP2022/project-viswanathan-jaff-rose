@@ -5,7 +5,9 @@ import java.util.LinkedList;
 
 public abstract class AbstractCPU {
 
-	public HashMap<String, Byte> registers;
+	protected AbstractCPUState currentState;
+	
+	protected LinkedList CPUStates;
 	
 	protected boolean debugFlag;
 
