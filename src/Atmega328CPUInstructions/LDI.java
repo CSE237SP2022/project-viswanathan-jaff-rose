@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.regex.*;
 
 import Interpreter.ATmega328PCPUState;
+import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractCPUState;
 import Interpreter.AbstractInstruction;
 import Interpreter.InstructionType;
 import Utils.ParsingUtils;
 
-public class LDI extends AbstractInstruction {
+public class LDI extends ATmega328PInstruction {
 	
 	private String [] args;
 	Byte immediateValue;

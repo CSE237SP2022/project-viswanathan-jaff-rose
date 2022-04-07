@@ -4,16 +4,18 @@ import Interpreter.ATmega328PCPUState;
 import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractCPUState;
+import Interpreter.InstructionType;
 public class ADD extends ATmega328PInstruction {
 
     private String destRegister;
     private String srcRegister;
 
-    private AbstractCPU cpu;
+    private ATmega328PCPUState cpustate;
 
     public ADD() {
         this.opcode = "ADD";
         this.CPU = "Atmega328P";
+        this.type = InstructionType.HWInstruction;
     }
 
     public void setArgs(String[] args) {
@@ -23,13 +25,13 @@ public class ADD extends ATmega328PInstruction {
 
     @Override
     public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
-
+    	this.cpustate = cpustate;
         if(debug) {
-            printDebug((byte)(this.cpu.getRegister(this.srcRegister));
+            printDebug((byte)(cpustate.getRegister(this.srcRegister)));
         }
 
         int result = (byte) cpustate.getRegister(this.destRegister) + (byte) cpustate.getRegister(this.srcRegister);
-        cpu.setRegister(this.destRegister, (byte)result);
+        cpustate.setRegister(this.destRegister, (byte)result);
         return cpustate;
     }
     
@@ -42,8 +44,8 @@ public class ADD extends ATmega328PInstruction {
 	}
 
     private void printDebug(byte newVal) {
-        System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpu.getRegister(this.destRegister));
-        System.out.println("Value at source register " + this.srcRegister + ": " + this.cpu.getRegister(this.srcRegister));
+        System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpustate.getRegister(this.destRegister));
+        System.out.println("Value at source register " + this.srcRegister + ": " + this.cpustate.getRegister(this.srcRegister));
         System.out.println("New Value at destination register " + this.destRegister + ": " + newVal);
     }
 }
