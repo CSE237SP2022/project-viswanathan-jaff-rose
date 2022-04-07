@@ -30,4 +30,6 @@ public class TestADD {
         int correctVal = (byte)ArduinoUno.getRegister("r28") + oldDest;
         assertEquals(ArduinoUno.getRegister("r29"), correctVal);
     }
+    
+}
 

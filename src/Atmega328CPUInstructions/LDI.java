@@ -50,5 +50,13 @@ public class LDI extends AbstractInstruction {
 		
 		return cpustate;
 	}
+	
+	@Override
+	public AbstractCPUState run(AbstractCPUState cpustate, boolean debug) throws Exception {
+		if(cpustate instanceof ATmega328PCPUState) {
+			return run((ATmega328PCPUState) cpustate, debug);
+		}
+		throw new Exception("Invalid or Corrupt CPU State");
+	}
 
 }
