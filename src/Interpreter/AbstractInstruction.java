@@ -9,8 +9,9 @@ public abstract class AbstractInstruction {
 	protected InstructionType type;
 	
 	public abstract void setArgs(String[] args) throws Exception;
+  
+	public abstract AbstractCPUState run(AbstractCPUState cpustate, boolean debug) throws Exception;
 
-	public abstract AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception;
 	
 	public String getOpcode() {
 		return this.opcode;
@@ -53,5 +54,6 @@ public abstract class AbstractInstruction {
 			return false;
 		return true;
 	}
+
 
 }

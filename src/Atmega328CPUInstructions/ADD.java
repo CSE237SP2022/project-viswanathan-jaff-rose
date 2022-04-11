@@ -1,16 +1,21 @@
 package Atmega328CPUInstructions;
 
+import Interpreter.ATmega328PCPUState;
+import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
-public class ADD extends AbstractInstruction {
+import Interpreter.AbstractCPUState;
+import Interpreter.InstructionType;
+public class ADD extends ATmega328PInstruction {
 
     private String destRegister;
-    private string srcRegister;
+    private String srcRegister;
 
-    private AbstractCPU cpu;
+    private ATmega328PCPUState cpustate;
 
     public ADD() {
         this.opcode = "ADD";
         this.CPU = "Atmega328P";
+        this.type = InstructionType.HWInstruction;
     }
 
     public void setArgs(String[] args) {
@@ -19,21 +24,28 @@ public class ADD extends AbstractInstruction {
     }
 
     @Override
-    public AbstractCPU run(AbstractCPU cpu, boolean debug) {
-        this.cpu = cpu;
-
+    public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
+    	this.cpustate = cpustate;
         if(debug) {
-            printDebug( (byte)(this.cpu.getRegister(this.srcRegister) );
+            printDebug(cpustate.getRegister(this.srcRegister));
         }
 
-        int result = (byte)this.destRegister + (byte)this.srcRegister;
-        cpu.setRegister(this.destRegister, (byte)result);
-        return cpu;
+        int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
+        cpustate.setRegister(this.destRegister, (byte)result);
+        return cpustate;
     }
+    
+	@Override
+	public AbstractCPUState run(AbstractCPUState cpustate, boolean debug) throws Exception {
+		if(cpustate instanceof ATmega328PCPUState) {
+			return run((ATmega328PCPUState) cpustate, debug);
+		}
+		throw new Exception("Invalid or Corrupt CPU State");
+	}
 
-    private void printDebug(byte newVal) {
-        System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpu.getRegister(this.destRegister));
-        System.out.println("Value at source register " + this.srcRegister + ": " + this.cpu.getRegister(this.srcRegister));
+    private void printDebug(int newVal) {
+        System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpustate.getRegister(this.destRegister));
+        System.out.println("Value at source register " + this.srcRegister + ": " + this.cpustate.getRegister(this.srcRegister));
         System.out.println("New Value at destination register " + this.destRegister + ": " + newVal);
     }
 }

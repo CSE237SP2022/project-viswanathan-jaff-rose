@@ -36,32 +36,6 @@ public class ASMFileReader {
 		return this.filepath;
 	}
 	
-	public void loadFile(String filename) {
-		
-		this.file = new File(filename);
-		
-		try {
-            Scanner sc = new Scanner(filename);
-            String fileName = file.toString();
-            boolean validFile = false;
-            int index = fileName.lastIndexOf('.');
-
-            if(index > 0) {
-                String extension = fileName.substring(index + 1);
-                if(!extension.equals("S")){
-                	System.out.println("Invalid File Extension: is not a .S file");
-                    throw new FileNotFoundException();
-                }
-            }
-            
-            this.filepath = filename;
-		}
-		catch (Exception e){
-			
-		}
-		
-	}
-	
 	public void read() {
 		
 		try {
@@ -81,6 +55,7 @@ public class ASMFileReader {
             }
 
             if(!validFile){
+            	sc.close();
                 throw new Exception("INVALID FILE TYPE");
             }
 

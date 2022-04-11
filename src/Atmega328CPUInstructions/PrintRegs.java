@@ -1,7 +1,10 @@
 package Atmega328CPUInstructions;
 
 import Interpreter.ATmega328PCPU;
+import Interpreter.ATmega328PCPUState;
 import Interpreter.AbstractCPU;
+import Interpreter.AbstractCPUState;
+
 import Interpreter.AbstractInstruction;
 import Interpreter.InstructionType;
 
@@ -19,7 +22,8 @@ public class PrintRegs extends AbstractInstruction {
 	}
 
 	@Override
-	public AbstractCPU run(AbstractCPU cpu, boolean debug) throws Exception {
+	public ATmega328PCPUState run(AbstractCPUState cpustate, boolean debug) throws Exception {
+
 		throw new Exception("Macro " + this.opcode  + " was ran as Hardware Instruction");
 	}
 
