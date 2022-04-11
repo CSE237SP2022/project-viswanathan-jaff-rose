@@ -63,6 +63,7 @@ public class TestCPUClass {
 		expectedInstructionMap.put("ADD", new ADD());
 		expectedInstructionMap.put("@@printregs", new PrintRegs());
 		
+
 		
 		System.out.println(expectedInstructionMap.toString());
 		System.out.println(ArduinoUno.getSupportedInstructions().toString());
@@ -76,12 +77,13 @@ public class TestCPUClass {
 		
 		try {
 			ArduinoUno.setRegister("r29", 0x8E);
+
 		} catch (Exception e) {
 			fail("Failed to set register");
 		}
 		
-		
 		if(ArduinoUno.getRegister("r29") != 0x8E) {
+
 			fail("Unable to get correct register value");
 		}
 		
@@ -97,6 +99,7 @@ public class TestCPUClass {
 		
 		try {
 			ArduinoUno.setRegister("ZMM0", 0x7B);
+
 			fail("Allowed Register to be written to invalid ZMM0 register");
 		} catch (Exception e) {
 

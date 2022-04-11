@@ -90,6 +90,7 @@ public class ATmega328PCPU extends AbstractCPU {
 			InstructionToExecute.setArgs(Args);
 
 			ATmega328PCPUState oldCPU = new ATmega328PCPUState(this.currentState);
+
 			this.CPUStates.add(oldCPU);
 
 			switch (InstructionToExecute.getType()) {
@@ -127,6 +128,22 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	}
 
+	private void runMacro(String opcode) throws Exception {
+		
+		
+		switch(opcode) {
+		
+		case "@@printregs":
+			System.out.println(this.toString());
+			return;
+			
+		default:
+			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
+		}
+		
+	}
+
+
 	private String[] pop_args(String[] line) {
 
 		String[] args = new String[line.length - 1];
@@ -137,19 +154,18 @@ public class ATmega328PCPU extends AbstractCPU {
 
 		return args;
 	}
-
 	public String toString() {
 		return this.currentState.toString();
+
 	}
 
 	@Override
 	public void setRegister(String register, Integer value) throws Exception {
-
 		this.currentState.setRegister(register, value);
-
 		return;
 
 	}
+
 
 	@Override
 	public Integer getRegister(String register) {

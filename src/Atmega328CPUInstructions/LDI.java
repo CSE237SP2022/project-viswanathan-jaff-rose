@@ -3,6 +3,7 @@ package Atmega328CPUInstructions;
 import java.util.Arrays;
 import java.util.regex.*;
 
+
 import Interpreter.ATmega328PCPUState;
 import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
@@ -15,6 +16,7 @@ public class LDI extends ATmega328PInstruction {
 	
 	private String [] args;
 	Integer immediateValue;
+
 	String registerToBeLoaded;
 	
 	public LDI() {
@@ -50,6 +52,7 @@ public class LDI extends ATmega328PInstruction {
 		cpustate.setRegister(this.registerToBeLoaded, this.immediateValue.byteValue());
 		
 		return cpustate;
+
 	}
 	
 	@Override
@@ -58,6 +61,7 @@ public class LDI extends ATmega328PInstruction {
 			return run((ATmega328PCPUState) cpustate, debug);
 		}
 		throw new Exception("Invalid or Corrupt CPU State");
+
 	}
 
 }

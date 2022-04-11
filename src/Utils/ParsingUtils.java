@@ -12,6 +12,7 @@ public class ParsingUtils {
 	    	throw new Exception("Invalid Constant '"+ potentialConstant +"' Specified");
 	    }
 	    
+
 	    Integer parsedConstant = new Integer(0xFFFFFFFF);
 	    
 	    if(matcher.group(1) != null) {
@@ -41,6 +42,5 @@ public class ParsingUtils {
 	    return parsedConstant;
 	 
 	}
-	
 
 }

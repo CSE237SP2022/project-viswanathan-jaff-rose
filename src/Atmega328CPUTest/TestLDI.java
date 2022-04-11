@@ -86,6 +86,5 @@ public class TestLDI {
 		assertEquals(023, ArduinoUno.getRegister("r29"));
 		
 	}
-	
 
 }

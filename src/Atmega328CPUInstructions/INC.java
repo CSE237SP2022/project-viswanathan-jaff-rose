@@ -3,6 +3,7 @@ package Atmega328CPUInstructions;
 import Interpreter.InstructionType;
 import Interpreter.ATmega328PCPUState;
 import Interpreter.ATmega328PInstruction;
+
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractCPUState;
 import Interpreter.AbstractInstruction;
@@ -24,6 +25,7 @@ public class INC extends ATmega328PInstruction {
 	
 	@Override
 	public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
+
 		
 		if(debug) {
 			printDebug( (byte)(cpustate.getRegister(this.registerIncremented) + 1), cpustate );
