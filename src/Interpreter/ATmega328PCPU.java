@@ -50,7 +50,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.currentState = newState;
 	}
 
-	public ATmega328PCPU(HashMap<String, Byte> registers, LinkedList<ATmega328PCPUState> CPUStates,
+	public ATmega328PCPU(HashMap<String, Integer> registers, LinkedList<ATmega328PCPUState> CPUStates,
 			long programCounter) {
 
 		this.currentState = new ATmega328PCPUState(registers, programCounter);
@@ -67,7 +67,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		return this.instructionMap;
 	}
 
-	public HashMap<String, Byte> getRegisters() {
+	public HashMap<String, Integer> getRegisters() {
 		return this.currentState.getRegisters();
 	}
 
@@ -143,7 +143,7 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 	@Override
-	public void setRegister(String register, byte value) throws Exception {
+	public void setRegister(String register, Integer value) throws Exception {
 
 		this.currentState.setRegister(register, value);
 
@@ -152,7 +152,7 @@ public class ATmega328PCPU extends AbstractCPU {
 	}
 
 	@Override
-	public byte getRegister(String register) {
+	public Integer getRegister(String register) {
 
 		if (this.debugFlag) {
 			System.out.println("Getting register: " + register);
@@ -165,7 +165,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		}
 	}
 
-	public HashMap<String, Byte> getRegisterMap() {
+	public HashMap<String, Integer> getRegisterMap() {
 		return this.currentState.getRegisters();
 	}
 

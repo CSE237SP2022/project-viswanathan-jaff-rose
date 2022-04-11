@@ -28,23 +28,23 @@ public class TestCPUClass {
 		
 		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
 		
-		HashMap<String, Byte> expectedRegisternMap =  new HashMap<String, Byte>();
+		HashMap<String, Integer> expectedRegisternMap =  new HashMap<String, Integer>();
 		
 		String [] rRegisterArray = {"r16","r17","r18","r19","r20","r21","r22","r23","r24","r25","r26","r27","r28","r29","r30","r31","r32"};
 		
-		expectedRegisternMap.put("C", (byte) 0);
-		expectedRegisternMap.put("Z", (byte) 0);
-		expectedRegisternMap.put("N", (byte) 0);
-		expectedRegisternMap.put("V", (byte) 0);
-		expectedRegisternMap.put("S", (byte) 0);
-		expectedRegisternMap.put("H", (byte) 0);
-		expectedRegisternMap.put("T", (byte) 0);
-		expectedRegisternMap.put("I", (byte) 0);
-		expectedRegisternMap.put("SREG", (byte) 0);
+		expectedRegisternMap.put("C",  0);
+		expectedRegisternMap.put("Z",   0);
+		expectedRegisternMap.put("N",   0);
+		expectedRegisternMap.put("V",   0);
+		expectedRegisternMap.put("S",   0);
+		expectedRegisternMap.put("H",   0);
+		expectedRegisternMap.put("T",   0);
+		expectedRegisternMap.put("I",   0);
+		expectedRegisternMap.put("SREG",   0);
 		
 		for(String rRegister : rRegisterArray) {
 		
-			expectedRegisternMap.put(rRegister, (byte) 0);
+			expectedRegisternMap.put(rRegister,   0);
 
 		}
 		
@@ -75,13 +75,13 @@ public class TestCPUClass {
 		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
 		
 		try {
-			ArduinoUno.setRegister("r29", (byte) 0x8E);
+			ArduinoUno.setRegister("r29", 0x8E);
 		} catch (Exception e) {
 			fail("Failed to set register");
 		}
 		
 		
-		if(ArduinoUno.getRegister("r29") != (byte) 0x8E) {
+		if(ArduinoUno.getRegister("r29") != 0x8E) {
 			fail("Unable to get correct register value");
 		}
 		
@@ -96,7 +96,7 @@ public class TestCPUClass {
 		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
 		
 		try {
-			ArduinoUno.setRegister("ZMM0", (byte) 0x7B);
+			ArduinoUno.setRegister("ZMM0", 0x7B);
 			fail("Allowed Register to be written to invalid ZMM0 register");
 		} catch (Exception e) {
 

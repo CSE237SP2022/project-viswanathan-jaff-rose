@@ -27,10 +27,10 @@ public class ADD extends ATmega328PInstruction {
     public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
     	this.cpustate = cpustate;
         if(debug) {
-            printDebug((byte)(cpustate.getRegister(this.srcRegister)));
+            printDebug(cpustate.getRegister(this.srcRegister));
         }
 
-        int result = (byte) cpustate.getRegister(this.destRegister) + (byte) cpustate.getRegister(this.srcRegister);
+        int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
         cpustate.setRegister(this.destRegister, (byte)result);
         return cpustate;
     }
@@ -43,7 +43,7 @@ public class ADD extends ATmega328PInstruction {
 		throw new Exception("Invalid or Corrupt CPU State");
 	}
 
-    private void printDebug(byte newVal) {
+    private void printDebug(int newVal) {
         System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpustate.getRegister(this.destRegister));
         System.out.println("Value at source register " + this.srcRegister + ": " + this.cpustate.getRegister(this.srcRegister));
         System.out.println("New Value at destination register " + this.destRegister + ": " + newVal);

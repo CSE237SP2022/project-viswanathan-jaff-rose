@@ -1,6 +1,6 @@
 LDI r29, 0x34
 INC r29
-LDI r28, 0x4E
-ADD r29, r28
-INC r29
+LDI r28, 0xAF
+@@printregs
+INC r28
 @@printregs

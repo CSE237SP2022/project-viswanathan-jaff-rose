@@ -14,7 +14,7 @@ import Utils.ParsingUtils;
 public class LDI extends ATmega328PInstruction {
 	
 	private String [] args;
-	Byte immediateValue;
+	Integer immediateValue;
 	String registerToBeLoaded;
 	
 	public LDI() {
