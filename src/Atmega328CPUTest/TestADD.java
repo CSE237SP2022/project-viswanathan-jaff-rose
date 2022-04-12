@@ -83,8 +83,8 @@ public class TestADD {
             e.printStackTrace();
         }
 
-        int correctVal = (byte)ArduinoUno.getRegister("r28") + oldDest;
-        assertEquals(ArduinoUno.getRegister("V"), 4);
+        assertEquals(ArduinoUno.getRegister("r29"),0x7F)
+        assertEquals(ArduinoUno.getRegister("V"), 1);
     }
     
 }

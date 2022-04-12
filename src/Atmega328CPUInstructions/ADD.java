@@ -31,8 +31,15 @@ public class ADD extends ATmega328PInstruction {
         }
 
         int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
-        cpustate.setRegister(this.destRegister, (byte)result);
-        return cpustate;
+        if(result >= 0x7F) {
+            cpustate.setRegister(this.destRegister, 0x7F);
+            cpustate.setRegister("V", (byte) 1);
+            return cpustate;
+        } else {
+            cpustate.setRegister(this.destRegister, (byte)result);
+            return cpustate;
+        }
+
     }
     
 	@Override
