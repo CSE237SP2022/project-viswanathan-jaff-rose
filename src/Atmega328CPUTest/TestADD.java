@@ -40,14 +40,14 @@ public class TestADD {
         //test add for regs 16-31
         for(int i = 16; i < 31; i++){
             String destReg = "r"+i;
-            int oldDest = (byte)ArduinoUno.getRegister(destReg);
+            int oldDest = ArduinoUno.getRegister(destReg);
             String srcReg = "r"+(i+1);
             try {
                 ArduinoUno.run(AFR.getAllParsedLines());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            int correctVal = (byte)ArduinoUno.getRegister(srcReg) + oldDest;
+            int correctVal = ArduinoUno.getRegister(srcReg) + oldDest;
             assertEquals(ArduinoUno.getRegister(destReg), correctVal);
         }
     }
@@ -59,13 +59,13 @@ public class TestADD {
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         System.out.println(AFR.getAllParsedLines());
 
-        int oldDest = (byte)ArduinoUno.getRegister("r28");
+        int oldDest = ArduinoUno.getRegister("r28");
         try {
             ArduinoUno.run(AFR.getAllParsedLines());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int correctVal = (byte)ArduinoUno.getRegister("r28") + oldDest;
+        int correctVal = ArduinoUno.getRegister("r28") + oldDest;
         assertEquals(ArduinoUno.getRegister("r28"), correctVal);
     }
 
@@ -74,16 +74,17 @@ public class TestADD {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDOverflow.S");
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
+        ArduinoUno.enableDebug(true);
         System.out.println(AFR.getAllParsedLines());
 
-        int oldDest = (byte)ArduinoUno.getRegister("r29");
+        int oldDest = ArduinoUno.getRegister("r29");
         try {
             ArduinoUno.run(AFR.getAllParsedLines());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        assertEquals(ArduinoUno.getRegister("r29"),0x7F)
+        assertEquals(ArduinoUno.getRegister("r29"), 0x80);
         assertEquals(ArduinoUno.getRegister("V"), 1);
     }
     
