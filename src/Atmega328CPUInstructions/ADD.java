@@ -32,11 +32,11 @@ public class ADD extends ATmega328PInstruction {
 
         int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
         if(result >= 0x7F) {
-            cpustate.setRegister(this.destRegister, 0x7F);
+            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
             cpustate.setRegister("V", (byte) 1);
             return cpustate;
         } else {
-            cpustate.setRegister(this.destRegister, (byte)result);
+            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
             return cpustate;
         }
 
@@ -53,6 +53,6 @@ public class ADD extends ATmega328PInstruction {
     private void printDebug(int newVal) {
         System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpustate.getRegister(this.destRegister));
         System.out.println("Value at source register " + this.srcRegister + ": " + this.cpustate.getRegister(this.srcRegister));
-        System.out.println("New Value at destination register " + this.destRegister + ": " + newVal);
+        System.out.println("New Value at destination register " + this.srcRegister + ": " + (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
     }
 }
