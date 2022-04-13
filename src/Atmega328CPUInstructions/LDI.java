@@ -34,7 +34,6 @@ public class LDI extends ATmega328PInstruction {
 		}
 		
 		this.registerToBeLoaded = args[0];
-		
 		this.immediateValue = ParsingUtils.regexParseAssemblyConstant(args[1]);
 		
 		if(this.immediateValue.equals(null)) {

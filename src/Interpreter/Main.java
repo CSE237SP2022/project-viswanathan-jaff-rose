@@ -7,27 +7,15 @@ public class Main {
 		boolean debugMode = false;
 		
 		if(args.length < 1) {
-			System.out.println("\n"
-					+ "Usage:\n"
-					+ "  javaduino <AssemblyFile>\n"
-					+ "\n"
-					+ "Options:\n"
-					+ "  -d            Invoke Debug Mode.\n"
-					);
+			printUsage();
 			return;
 		}
 		
 		if(args.length >= 2) {
-			
 			if(args[1].equals("-d")) {
-				
 				debugMode = true;
-				
 				System.out.println("Debug Mode Enabled");
-				
 			}
-			
-			
 		}
 		
 		ASMFileReader AFR = new ASMFileReader(args[0]);
@@ -41,12 +29,18 @@ public class Main {
 		try {
 			ArduinoUno.run(AFR.getAllParsedLines());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-	
-		
+	}
+
+	private static void printUsage() {
+		System.out.println("\n"
+				+ "Usage:\n"
+				+ "  javaduino <AssemblyFile> [options]\n"
+				+ "\n"
+				+ "Options:\n"
+				+ "  -d            Invoke Debug Mode.\n"
+				);
 	}
 	
 

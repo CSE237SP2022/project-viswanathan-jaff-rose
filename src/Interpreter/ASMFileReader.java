@@ -39,64 +39,63 @@ public class ASMFileReader {
 	public void read() {
 		
 		try {
-            Scanner sc = new Scanner(this.file);
-            
-            //System.out.println(sc);
-            
-            String fileName = this.file.toString();
-            boolean validFile = false;
-            int index = fileName.lastIndexOf('.');
+	            Scanner sc = new Scanner(this.file);
+	            
+	            extractAndValidateFile(sc);
 
-            if(index > 0) {
-                String extension = fileName.substring(index + 1);
-                if(extension.equals("S")){
-                    validFile = true;
-                }
-            }
-
-            if(!validFile){
-            	sc.close();
-                throw new Exception("INVALID FILE TYPE");
-            }
-
-            while (sc.hasNextLine()) {
-            	String line = sc.nextLine();
-            	if ( !line.equals(" ") ) {
-            		this.assemblyLines.add(line);
-            	}
-                System.out.println(line);
-            }
-            sc.close();
-            
-            parseAllAssemblyLines();
+	            while (sc.hasNextLine()) {
+	            	String line = sc.nextLine();
+	            	if ( !line.equals(" ") ) {
+	            		this.assemblyLines.add(line);
+	            	}
+	                System.out.println(line);
+	            }
+	            sc.close();
+	            
+	            parseAllAssemblyLines();
 
         } catch (Exception e){
             System.out.println(e);
         }
 		
 	}
-	
+
+	private void extractAndValidateFile(Scanner sc) throws Exception {
+		String fileName = this.file.toString();
+		boolean validFile = false;
+		int index = fileName.lastIndexOf('.');
+
+		if(index > 0) {
+		    String extension = fileName.substring(index + 1);
+		    if(extension.equals("S")){
+		        validFile = true;
+		    }
+		}
+
+		if(!validFile){
+			sc.close();
+		    throw new Exception("INVALID FILE TYPE");
+		}
+	}
+
 	public String[] parseAssemblyLine( String lineOfAssembly ) {
 		int indexOfString = 0;
 		String opCode = "";
 		
-		
-		while( lineOfAssembly.charAt(indexOfString) != ' ' ) {
-			opCode += lineOfAssembly.charAt(indexOfString);
-			indexOfString++;
-			
+		while(lineOfAssembly.charAt(indexOfString) != ' ') {
 			if( indexOfString == lineOfAssembly.length()) {
 				break;
 			}
+			opCode += lineOfAssembly.charAt(indexOfString);
+			indexOfString++;
 			
 		}
 		
-		
-		lineOfAssembly = lineOfAssembly.substring(indexOfString);
-		lineOfAssembly = lineOfAssembly.replaceAll(" ", "");
+		lineOfAssembly = lineOfAssembly.substring(indexOfString).replaceAll(" ", "");
 		String[] arrayOfParameters = lineOfAssembly.split(",");
 		String[] arrayOfSeperateOpcodeAndParameters = new String[arrayOfParameters.length + 1];
 		arrayOfSeperateOpcodeAndParameters[0] = opCode;
+		
 		for( int i = 0; i < arrayOfParameters.length; i++ ) {
 			arrayOfSeperateOpcodeAndParameters[i+1] = arrayOfParameters[i];
 		}
@@ -105,7 +104,7 @@ public class ASMFileReader {
 	
 	public void parseAllAssemblyLines() {
 		for( int i = 0; i < assemblyLines.size(); i++ ) {
-			String[] parsedLine = parseAssemblyLine( assemblyLines.get(i));
+			String[] parsedLine = parseAssemblyLine(assemblyLines.get(i));
 			parsedAssemblyLines.add(parsedLine);
 		}
 	}
