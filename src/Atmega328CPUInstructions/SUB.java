@@ -35,6 +35,7 @@ public class SUB extends ATmega328PInstruction {
         //checks for overflow of register
         if(result < 0x00) {
             cpustate.setRegister(this.destRegister, result);
+            cpustate.setRegister("S", (byte) 1);
             cpustate.setRegister("V", (byte) 1);
             return cpustate;
         } else {

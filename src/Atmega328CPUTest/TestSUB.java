@@ -90,6 +90,7 @@ public class TestSUB {
         //check register is less than 127 and V is set to 1
         assertTrue(ArduinoUno.getRegister("r29") < 0x00);
         assertEquals(ArduinoUno.getRegister("V"), 1);
+        assertEquals(ArduinoUno.getRegister("S"), 1);
     }
     
 }
