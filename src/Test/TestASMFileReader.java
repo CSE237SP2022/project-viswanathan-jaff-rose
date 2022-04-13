@@ -129,13 +129,11 @@ public class TestASMFileReader {
 			
 			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
 			
-			
 			for( int i = 0; i < returnedLines.size(); i++ ) {
 				for( int j = 0; j < returnedLines.get(i).length; j++ ) {
 					assertTrue( listOfParsedLines.get(i)[j].equals(returnedLines.get(i)[j]));
 				}
 			}
-			
 			
 		} catch (Exception e) {
 			System.out.println(e);

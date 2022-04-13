@@ -1,24 +1,31 @@
-What user stories were completed this iteration?
-  - We were able to take in an assembly file
-  - We were able to check if the file is a valid ".S" file
-  - Parse out the instructions and compact them into an array
+### What user stories were completed this iteration?
+  - We built the CPU class/CPU States and the OOP that puts this together 
+  - CPU Instructions ADD, LDI, and INC
+  - Assembly Macros (@@printregs)
+  - 
   - Unit tests to verify all this works
 
-What user stories do you intend to complete next iteration?
-  - A CPU object and a basic flow for executing instructions
-  - An abstract instruction object
-  - An increment instruction
-  - A printregs macro auto-encoded
+### What user stories do you intend to complete next iteration?
+  - More instructions. Including CP, ADI, and MOV
+  - More robust exception handling
+  - New 
   
-Is there anything that you implemented but doesn't currently work?
-  - Not yet
+### Is there anything that you implemented but doesn't currently work?
+  - We refactored the code to make the registers Java Integers, because encoding the data into Java bytes was giving us issues when it came to values in the high bits since bytes are signed. As a result, the CPU registers theoretically can't handle overflow right now, but in practice, the overflow moves into the 24 high bits which are ignored for the instructions and workflow we've written. We plan to immediately add overflow checking.
   
-What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
-  - Run
+### What commands are needed to compile and run your code from the command line? 
+
+A shell script is provided to run it, and a test Assembly File has been provided.
+
+run without debug:
+
 ```bash
-
-sh run.sh src/Interpreter/Test.S
-
+sh run.sh Test.S
 ```
 
-It does not currently compile the code, we will fix that over the weekend but it will run a test case.
+run with debug:
+
+```bash
+sh run.sh Test.S -d
+```
+
