@@ -7,9 +7,9 @@ import Interpreter.AbstractCPUState;
 import Interpreter.InstructionType;
 public class ADD extends ATmega328PInstruction {
 
+    //member variable declaration
     private String destRegister;
     private String srcRegister;
-
     private ATmega328PCPUState cpustate;
 
     public ADD() {
@@ -29,8 +29,8 @@ public class ADD extends ATmega328PInstruction {
         if(debug) {
             printDebug(cpustate.getRegister(this.srcRegister));
         }
-
         int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
+        //checks for overflow of register
         if(result >= 0x7F) {
             cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
             cpustate.setRegister("V", (byte) 1);
