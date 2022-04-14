@@ -116,7 +116,6 @@ public class ATmega328PCPUState extends AbstractCPUState {
 
 		throw new Exception("Attempted to Write to Invalid Register '" + register + "'");
 	
-		
 	}
 
 	public Integer getRegister(String register) {

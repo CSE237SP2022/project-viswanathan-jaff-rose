@@ -79,15 +79,21 @@ public class ASMFileReader {
 	}
 
 	public String[] parseAssemblyLine( String lineOfAssembly ) {
+		
+		if(lineOfAssembly.isBlank()) {
+			String [] blank = {""};
+			return blank;
+		}
+		
 		int indexOfString = 0;
 		String opCode = "";
 		
 		while(lineOfAssembly.charAt(indexOfString) != ' ') {
-			if( indexOfString == lineOfAssembly.length()) {
-				break;
-			}
 			opCode += lineOfAssembly.charAt(indexOfString);
 			indexOfString++;
+			if(lineOfAssembly.length() == indexOfString) {
+				break;
+			}
 			
 		}
 		
@@ -105,7 +111,11 @@ public class ASMFileReader {
 	public void parseAllAssemblyLines() {
 		for( int i = 0; i < assemblyLines.size(); i++ ) {
 			String[] parsedLine = parseAssemblyLine(assemblyLines.get(i));
-			parsedAssemblyLines.add(parsedLine);
+			
+			if(!parsedLine[0].isBlank()) {
+				parsedAssemblyLines.add(parsedLine);
+			}
+			
 		}
 	}
 	

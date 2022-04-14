@@ -92,6 +92,10 @@ public class ATmega328PCPU extends AbstractCPU {
 			ATmega328PCPUState oldCPU = new ATmega328PCPUState(this.currentState);
 
 			this.CPUStates.add(oldCPU);
+			
+			if(this.debugFlag) {
+				System.out.println(InstructionToExecute.getType());
+			}
 
 			switch (InstructionToExecute.getType()) {
 			case HWInstruction:
@@ -126,21 +130,6 @@ public class ATmega328PCPU extends AbstractCPU {
 			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
 		}
 
-	}
-
-	private void runMacro(String opcode) throws Exception {
-		
-		
-		switch(opcode) {
-		
-		case "@@printregs":
-			System.out.println(this.toString());
-			return;
-			
-		default:
-			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
-		}
-		
 	}
 
 
