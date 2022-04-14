@@ -1,5 +1,6 @@
 #!/bin/bash
-javac -d bin/ src/Interpreter/*.java
+
+javac -d bin/ -sourcepath src src/Interpreter/*.java
 
 stringZ="java -cp bin Interpreter.Main"
 
