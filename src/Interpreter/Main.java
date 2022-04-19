@@ -26,8 +26,10 @@ public class Main {
 		
 		ArduinoUno.enableDebug(debugMode);
 		
+		System.out.print(AFR.getAllParsedLines().toString());
+		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			//ArduinoUno.run(AFR.getAllParsedLines());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
