@@ -95,5 +95,24 @@ public class TestADD {
         assertEquals(ArduinoUno.getRegister("V"), 1);
     }
     
+    @Test
+    void testADD_RealOverflow() {
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDRealOverflow.S");
+        AFR.read();
+        AbstractCPU ArduinoUno = new ATmega328PCPU();
+        ArduinoUno.enableDebug(true);
+
+    	try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        //check register is over 127 and V is set to 1
+        assertEquals(0x0E, ArduinoUno.getRegister("r29"));
+
+    }
+    
 }
 
