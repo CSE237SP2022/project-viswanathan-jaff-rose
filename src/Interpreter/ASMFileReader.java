@@ -10,6 +10,8 @@ public class ASMFileReader {
 	
 	private String filepath;
 	
+	private int currentline;
+	
 	private File file;
 	
 	private LinkedList<String> assemblyLines;
@@ -36,6 +38,7 @@ public class ASMFileReader {
 		this.currentFunction = new LinkedList<String []>();
 		this.parsedAssembly = new HashMap<String, LinkedList<String[]>>();
 		this.isParsingAFunction = false;
+		this.currentline = 0;
 	}
 	
 	public String getIndividualASMline(int lineNumber) {
@@ -124,7 +127,11 @@ public class ASMFileReader {
 			
 			if(!parsedLine[0].isBlank()) {
 				
+				this.currentline++;
+				
 				determineLine(parsedLine);
+				
+				
 				
 			}
 			
@@ -165,16 +172,21 @@ public class ASMFileReader {
 	}
 
 	private void initiateFunctionDefinition(String parsedLabel) throws AssemblyParserException {
-		if( !this.parsedAssembly.containsKey(parsedLabel)) {
-			throw new AssemblyParserException("Missing Forward Delcaration of assembly function " + parsedLabel);
+		
+		String cleanedLabel = parsedLabel.strip().replace(":", "");
+		
+		if( !this.parsedAssembly.containsKey(cleanedLabel)) {
+			throw new AssemblyParserException("Initiation Error (Line " + this.currentline +  "): Forward Delcaration of assembly function " + cleanedLabel);
 		}
 		else {
 			if(this.isParsingAFunction) {
 				endFunctionParse(this.currentFunctionIdentifier);
 			}
-			else {
-				startFunctionParse(parsedLabel);
-			}
+			
+			this.isParsingAFunction = true;
+				
+			startFunctionParse(cleanedLabel);
+			
 		}
 		
 	}
@@ -189,9 +201,15 @@ public class ASMFileReader {
 			throw new AssemblyParserException("Blank Label for global function specified");
 		}
 		
+		if(this.parsedAssembly.containsKey(parsedLine[1])) {
+			throw new AssemblyParserException("Redeclaration of Assembly Function");
+		}
+		
 		if(this.isParsingAFunction) {
 			endFunctionParse(this.currentFunctionIdentifier);
 		}
+		
+		declareFunction(parsedLine[1]);
 
 	}
 
@@ -218,6 +236,13 @@ public class ASMFileReader {
 		parsedAssembly.put(functionname, null);
 		
 		this.isParsingAFunction = true;
+	}
+	
+	private void declareFunction(String functionname) {
+			
+			parsedAssembly.put(functionname, null);
+			
+			this.isParsingAFunction = false;
 	}
 	
 
