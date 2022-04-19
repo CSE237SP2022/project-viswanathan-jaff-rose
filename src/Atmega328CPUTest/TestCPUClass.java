@@ -9,7 +9,6 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 import Atmega328CPUInstructions.*;
-import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
@@ -61,7 +60,8 @@ public class TestCPUClass {
 		expectedInstructionMap.put("INC", new INC());
 		expectedInstructionMap.put("LDI", new LDI());
 		expectedInstructionMap.put("ADD", new ADD());
-		expectedInstructionMap.put("@@printregs", new PrintRegs());
+		expectedInstructionMap.put("RET", new RET());
+		expectedInstructionMap.put("@@PRINTREGS", new PrintRegs());
 		
 
 		

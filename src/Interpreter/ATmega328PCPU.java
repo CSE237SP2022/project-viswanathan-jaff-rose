@@ -114,8 +114,17 @@ public class ATmega328PCPU extends AbstractCPU {
 			if(this.debugFlag) {
 				System.out.println(InstructionToExecute.getType());
 			}
+			
+			if(cleanedOpcode.equals("RET")) {
+				return;
+			}
 
 			switch (InstructionToExecute.getType()) {
+			
+			case FlowInstruction:
+				this.runFlowInstruction(cleanedOpcode);
+				break;
+			
 			case HWInstruction:
 				AbstractCPUState newState = InstructionToExecute.run(this.currentState, this.debugFlag);
 				if(newState instanceof ATmega328PCPUState){
@@ -150,6 +159,15 @@ public class ATmega328PCPU extends AbstractCPU {
 
 		default:
 			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
+		}
+
+	}
+	
+	private void runFlowInstruction(String opcode) throws Exception {
+
+		switch (opcode) {
+		default:
+			throw new Exception("Invalid or Unimplemented Flow Instruction: " + opcode);
 		}
 
 	}

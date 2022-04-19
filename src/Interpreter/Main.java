@@ -48,8 +48,6 @@ public class Main {
 		
 		ArduinoUno.enableDebug(verboseMode);
 		
-		System.out.print(AFR.getAllParsedLines().toString());
-		
 		try {
 			ArduinoUno.loadProgram(AFR.getAllParsedLines());
 			ArduinoUno.run(functionToRun);
