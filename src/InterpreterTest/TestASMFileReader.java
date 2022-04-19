@@ -1,4 +1,4 @@
-package Test;
+package InterpreterTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-
+import org.junit.jupiter.api.Test;
 
 import Interpreter.ASMFileReader;
 
@@ -28,9 +28,9 @@ public class TestASMFileReader {
 	@Test
 	void test_constructor_filepath() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			
-			assertTrue(AFR.getFilepath().equals("src/Test/Test.S"));
+			assertTrue(AFR.getFilepath().equals("src/InterpreterTest/Test.S"));
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -41,11 +41,11 @@ public class TestASMFileReader {
 	@Test
 	void test_read_file() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			
 			AFR.read();
 	            
-			Scanner sc = new Scanner(new File("src/Test/Test.S"));
+			Scanner sc = new Scanner(new File("src/InterpreterTest/Test.S"));
 			
 			String comp1 = sc.nextLine();
 			
@@ -81,7 +81,7 @@ public class TestASMFileReader {
 		
 		try {
 			
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			AFR.read();    
 			String[] completedParseOne= {"ADD", "r24", "r25"};
 			String[] completedParseTwo = {"INC", "r23"};
