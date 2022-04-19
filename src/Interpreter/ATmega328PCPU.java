@@ -26,7 +26,8 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("INC", new INC());
 		this.instructionMap.put("LDI", new LDI());
 		this.instructionMap.put("ADD", new ADD());
-		this.instructionMap.put("@@printregs", new PrintRegs());
+		this.instructionMap.put("RET", new RET());
+		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
 
 	public ATmega328PCPU() {
@@ -93,11 +94,13 @@ public class ATmega328PCPU extends AbstractCPU {
 		LinkedList<String[]> instructions = this.program.get(functionName);
 
 		for (String[] Line : instructions) {
+			
+			String cleanedOpcode = stadardizeOpcodeString(Line[0]);
 
-			AbstractInstruction InstructionToExecute = instructionMap.get(Line[0]);
+			AbstractInstruction InstructionToExecute = instructionMap.get(cleanedOpcode);
 
 			if (InstructionToExecute == null) {
-				throw new Exception("Invalid Instruction " + "\"" + Line[0] + "\"" + " Specified");
+				throw new Exception("Invalid Instruction or Macro " + "\"" + cleanedOpcode + "\"" + " Specified");
 			}
 
 			String[] Args = pop_args(Line);
@@ -120,7 +123,7 @@ public class ATmega328PCPU extends AbstractCPU {
 				}
 				break;
 			case Macro:
-				this.runMacro(InstructionToExecute.getOpcode());
+				this.runMacro(cleanedOpcode);
 				break;
 			}
 
@@ -133,11 +136,15 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	}
 
+	private String stadardizeOpcodeString(String opcode) {
+		return opcode.strip().toUpperCase();
+	}
+
 	private void runMacro(String opcode) throws Exception {
 
 		switch (opcode) {
 
-		case "@@printregs":
+		case "@@PRINTREGS":
 			System.out.println(this.toString());
 			return;
 

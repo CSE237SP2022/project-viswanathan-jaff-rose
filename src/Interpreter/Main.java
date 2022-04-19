@@ -4,7 +4,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		boolean debugMode = false;
+		boolean verboseMode = false;
 		
 		String functionToRun = "main";
 		
@@ -16,8 +16,8 @@ public class Main {
 		if(args.length >= 2) {
 			
 			for(int i=1; i< args.length; i++) {
-				if(args[i].equals("-d")) {
-					debugMode = true;
+				if(args[i].equals("-v")) {
+					verboseMode = true;
 				}
 				if(args[i].equals("-f")) {
 					if(i+1 >= args.length) {
@@ -32,12 +32,12 @@ public class Main {
 			
 		}
 		
-		if(debugMode) {
-			System.out.println("Debug Mode Enabled");
-		}
-		
-		if(functionToRun.equals("main")) {
-			System.out.println("Running custom function: " + functionToRun);
+		if(verboseMode) {
+			System.out.println("Verbose Mode Enabled");
+			
+			if(functionToRun.equals("main")) {
+				System.out.println("Running custom function: " + functionToRun);
+			}
 		}
 		
 		ASMFileReader AFR = new ASMFileReader(args[0]);
@@ -46,7 +46,7 @@ public class Main {
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
-		ArduinoUno.enableDebug(debugMode);
+		ArduinoUno.enableDebug(verboseMode);
 		
 		System.out.print(AFR.getAllParsedLines().toString());
 		
