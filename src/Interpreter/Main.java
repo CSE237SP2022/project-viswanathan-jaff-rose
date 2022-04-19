@@ -51,7 +51,8 @@ public class Main {
 		System.out.print(AFR.getAllParsedLines().toString());
 		
 		try {
-			//ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run(functionToRun);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -11,7 +11,7 @@ public abstract class AbstractCPU {
 	
 	protected boolean debugFlag;
 
-	public abstract void run(LinkedList<String[]> instructions) throws Exception;
+	public abstract void run(String functionName) throws Exception;
 	
 	public abstract void setRegister(String register, Integer value) throws Exception;
 
@@ -20,5 +20,7 @@ public abstract class AbstractCPU {
 	public void enableDebug(boolean isEnabled) {
 		this.debugFlag = isEnabled;
 	}
+
+	protected abstract void loadProgram(HashMap<String, LinkedList<String[]>> allParsedLines);
 
 }

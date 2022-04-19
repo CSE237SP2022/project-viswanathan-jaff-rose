@@ -14,6 +14,12 @@ public class ATmega328PCPU extends AbstractCPU {
 	protected LinkedList<ATmega328PCPUState> CPUStates;
 
 	private HashMap<String, AbstractInstruction> instructionMap;
+	
+	private HashMap<String, LinkedList<String[]>> program;
+	
+	private HashMap<String, LinkedList<AbstractInstruction[]>> functionMap;
+	
+	
 
 	private void create_opcode_map() {
 
@@ -40,6 +46,13 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.currentState = new ATmega328PCPUState(oldcpu.getCurrentState());
 		this.instructionMap = new HashMap<String, AbstractInstruction>(oldcpu.getInstructionMap());
 
+	}
+	
+	public void loadProgram(HashMap<String, LinkedList<String[]>> allParsedLines) {
+		
+		this.program = allParsedLines;
+		
+		return;
 	}
 
 	private ATmega328PCPUState getCurrentState() {
@@ -71,11 +84,13 @@ public class ATmega328PCPU extends AbstractCPU {
 		return this.currentState.getRegisters();
 	}
 
-	public void run(LinkedList<String[]> instructions) throws Exception {
+	public void run(String functionName) throws Exception {
 
 		if (this.debugFlag) {
 			System.out.println(this.toString() + "\n");
 		}
+		
+		LinkedList<String[]> instructions = this.program.get(functionName);
 
 		for (String[] Line : instructions) {
 
