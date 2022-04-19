@@ -30,12 +30,13 @@ public class ADD extends ATmega328PInstruction {
             printDebug(cpustate.getRegister(this.srcRegister));
         }
         int result = cpustate.getRegister(this.destRegister) + cpustate.getRegister(this.srcRegister);
-        //checks for overflow of register
+        //checks for two's complement overflow of register
         if(result >= 0x7F) {
             cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
             cpustate.setRegister("V", (byte) 1);
             return cpustate;
-        } else {
+        } 
+        else {
             cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.srcRegister) + this.cpustate.getRegister(this.destRegister)));
             return cpustate;
         }

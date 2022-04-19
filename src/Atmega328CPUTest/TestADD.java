@@ -77,8 +77,8 @@ public class TestADD {
     }
 
     @Test
-    void testADD_Overflow() {
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDOverflow.S");
+    void testADD_TwosComplementOverflow() {
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDTwosComplementOverflow.S");
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         ArduinoUno.enableDebug(true);
@@ -91,7 +91,7 @@ public class TestADD {
 		}
 
         //check register is over 127 and V is set to 1
-        assertEquals(ArduinoUno.getRegister("r29"), 0x80);
+        assertEquals(0x8E, ArduinoUno.getRegister("r29"));
         assertEquals(ArduinoUno.getRegister("V"), 1);
     }
     
