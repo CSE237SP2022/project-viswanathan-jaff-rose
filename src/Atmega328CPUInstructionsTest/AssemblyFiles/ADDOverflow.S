@@ -1,3 +1,7 @@
+.global main
+
+
+main:
 LDI r29, 0x64
 LDI r28, 0x1c
 ADD r29 r28

@@ -21,6 +21,6 @@ public abstract class AbstractCPU {
 		this.debugFlag = isEnabled;
 	}
 
-	protected abstract void loadProgram(HashMap<String, LinkedList<String[]>> allParsedLines);
+	public abstract void loadProgram(HashMap<String, LinkedList<String[]>> allParsedLines);
 
 }

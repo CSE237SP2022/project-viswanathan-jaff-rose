@@ -21,7 +21,8 @@ public class TestLDI {
 		ArduinoUno.enableDebug(true);
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +41,8 @@ public class TestLDI {
 		ArduinoUno.enableDebug(true);
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,7 +61,8 @@ public class TestLDI {
 		ArduinoUno.enableDebug(true);
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,7 +81,8 @@ public class TestLDI {
 		ArduinoUno.enableDebug(true);
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

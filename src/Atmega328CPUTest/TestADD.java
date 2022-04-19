@@ -18,14 +18,15 @@ public class TestADD {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSimple.S");
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
-        System.out.println(AFR.getAllParsedLines());
 
         int oldDest = ArduinoUno.getRegister("r29");
-        try {
-            ArduinoUno.run(AFR.getAllParsedLines());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
         //checks if add results in correct value
         int correctVal = ArduinoUno.getRegister("r28") + oldDest;
         assertEquals(ArduinoUno.getRegister("r29"), correctVal);
@@ -36,18 +37,18 @@ public class TestADD {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDFull.S");
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
-        System.out.println(AFR.getAllParsedLines());
 
         //test add for regs 16-31
         for(int i = 16; i < 31; i++){
             String destReg = "r"+i;
             String srcReg = "r"+(i+1);
             int oldDest = ArduinoUno.getRegister(destReg);
-            try {
-                ArduinoUno.run(AFR.getAllParsedLines());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    		try {
+    			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+    			ArduinoUno.run("main");
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
             //checks if add value is correct
             int correctVal = ArduinoUno.getRegister(srcReg) + oldDest;
             assertEquals(ArduinoUno.getRegister(destReg), correctVal);
@@ -59,14 +60,17 @@ public class TestADD {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSelf.S");
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
-        System.out.println(AFR.getAllParsedLines());
 
         int oldDest = ArduinoUno.getRegister("r28");
-        try {
-            ArduinoUno.run(AFR.getAllParsedLines());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
+		try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        
         //checks if add value is correct
         int correctVal = ArduinoUno.getRegister("r28") + oldDest;
         assertEquals(ArduinoUno.getRegister("r28"), correctVal);
@@ -78,13 +82,13 @@ public class TestADD {
         AFR.read();
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         ArduinoUno.enableDebug(true);
-        System.out.println(AFR.getAllParsedLines());
 
-        try {
-            ArduinoUno.run(AFR.getAllParsedLines());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    	try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         //check register is over 127 and V is set to 1
         assertEquals(ArduinoUno.getRegister("r29"), 0x80);
