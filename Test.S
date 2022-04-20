@@ -7,7 +7,7 @@ INC r29
 LDI r28, 0xAF
 inc r28
 @@printregs
-call someFunction
+jmp someFunction
 @@printregs
 ret
 
