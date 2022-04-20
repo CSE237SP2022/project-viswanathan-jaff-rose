@@ -1,1 +1,4 @@
+.global main
+
+main:
 @@printregs

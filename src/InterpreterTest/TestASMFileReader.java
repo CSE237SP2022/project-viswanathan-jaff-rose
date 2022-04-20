@@ -1,6 +1,4 @@
-package Test;
-
-import  org.junit.jupiter.api.*;
+package InterpreterTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -8,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-
+import org.junit.jupiter.api.Test;
 
 import Interpreter.ASMFileReader;
 
@@ -30,9 +29,9 @@ public class TestASMFileReader {
 	@Test
 	void test_constructor_filepath() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			
-			assertTrue(AFR.getFilepath().equals("src/Test/Test.S"));
+			assertTrue(AFR.getFilepath().equals("src/InterpreterTest/Test.S"));
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -43,11 +42,11 @@ public class TestASMFileReader {
 	@Test
 	void test_read_file() {
 		try {
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			
 			AFR.read();
 	            
-			Scanner sc = new Scanner(new File("src/Test/Test.S"));
+			Scanner sc = new Scanner(new File("src/InterpreterTest/Test.S"));
 			
 			String comp1 = sc.nextLine();
 			
@@ -83,7 +82,7 @@ public class TestASMFileReader {
 		
 		try {
 			
-			ASMFileReader AFR = new ASMFileReader("src/Test/Test.S");
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/Test.S");
 			AFR.read();    
 			String[] completedParseOne= {"ADD", "r24", "r25"};
 			String[] completedParseTwo = {"INC", "r23"};
@@ -91,8 +90,9 @@ public class TestASMFileReader {
 			listOfParsedLines.add(completedParseOne);
 			listOfParsedLines.add(completedParseTwo);
 			
-			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			HashMap<String, LinkedList<String[]>> program = AFR.getAllParsedLines();
 			
+			LinkedList<String[]> returnedLines = program.get("main");
 			
 			for( int i = 0; i < returnedLines.size(); i++ ) {
 				
@@ -104,6 +104,7 @@ public class TestASMFileReader {
 			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 			
 			fail("Error occured during test");
@@ -127,7 +128,9 @@ public class TestASMFileReader {
 			LinkedList<String[]> listOfParsedLines = new LinkedList<>();
 			listOfParsedLines.add(completedParseOne);
 			
-			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			HashMap<String, LinkedList<String[]>> overallParse  = AFR.getAllParsedLines();
+			
+			LinkedList<String []> returnedLines = overallParse.get("main");
 			
 			for( int i = 0; i < returnedLines.size(); i++ ) {
 				for( int j = 0; j < returnedLines.get(i).length; j++ ) {
@@ -136,7 +139,7 @@ public class TestASMFileReader {
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			fail("Error occured during test");
 		}
 		

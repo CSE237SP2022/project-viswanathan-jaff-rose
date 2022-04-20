@@ -1,3 +1,7 @@
+.global main
+
+
+main:
 ADD r16 r17
 ADD r17 r18
 ADD r18 r19

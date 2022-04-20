@@ -2,6 +2,7 @@ package Interpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -9,15 +10,24 @@ public class ASMFileReader {
 	
 	private String filepath;
 	
+	private int currentline;
+	
 	private File file;
 	
 	private LinkedList<String> assemblyLines;
 	
-	private LinkedList<String[]> parsedAssemblyLines;
+	private String currentFunctionIdentifier;
+	
+	private boolean isParsingAFunction;
+	
+	private LinkedList<String[]> currentFunction;
+	
+	private HashMap<String, LinkedList<String[]>> parsedAssembly;
 	
 	public ASMFileReader() {
 		this.assemblyLines = new LinkedList<String>();
-		this.parsedAssemblyLines = new LinkedList<String[]>();
+		this.parsedAssembly = new HashMap<String, LinkedList<String[]>>();
+		this.isParsingAFunction = false;
 	}
 	
 	public ASMFileReader(String filename) {
@@ -25,7 +35,10 @@ public class ASMFileReader {
 		this.file = new File(filename);
 		this.filepath = filename;
 		this.assemblyLines = new LinkedList<String>();
-		this.parsedAssemblyLines = new LinkedList<String[]>();
+		this.currentFunction = new LinkedList<String []>();
+		this.parsedAssembly = new HashMap<String, LinkedList<String[]>>();
+		this.isParsingAFunction = false;
+		this.currentline = 0;
 	}
 	
 	public String getIndividualASMline(int lineNumber) {
@@ -78,7 +91,7 @@ public class ASMFileReader {
 		}
 	}
 
-	public String[] parseAssemblyLine( String lineOfAssembly ) {
+	public String[] parseAssemblyLine(String lineOfAssembly ) {
 		
 		if(lineOfAssembly.isBlank()) {
 			String [] blank = {""};
@@ -113,14 +126,128 @@ public class ASMFileReader {
 			String[] parsedLine = parseAssemblyLine(assemblyLines.get(i));
 			
 			if(!parsedLine[0].isBlank()) {
-				parsedAssemblyLines.add(parsedLine);
+				
+				this.currentline++;
+				
+				determineLine(parsedLine);
+				
+				
+				
 			}
 			
 		}
+		
+		if(this.isParsingAFunction) {
+			endFunctionParse(this.currentFunctionIdentifier);
+		}
+		
+		
 	}
 	
-	public LinkedList<String[]> getAllParsedLines() {
-		return this.parsedAssemblyLines;
+	private void determineLine(String [] parsedLine) {
+		
+		if(parsedLine[0].equals(".global")) {
+			
+			try {
+				addGlobalLabel(parsedLine);
+			}
+			catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		else if(parsedLine[0].contains(":")) {
+			try {
+				initiateFunctionDefinition(parsedLine[0]);
+			} 
+			catch (AssemblyParserException e) {
+				System.out.println(e);
+			}
+		}
+		else {
+			
+			currentFunction.add(parsedLine);
+		
+		}
+		
+	}
+
+	private void initiateFunctionDefinition(String parsedLabel) throws AssemblyParserException {
+		
+		String cleanedLabel = parsedLabel.strip().replace(":", "");
+		
+		if( !this.parsedAssembly.containsKey(cleanedLabel)) {
+			throw new AssemblyParserException("Initiation Error (Line " + this.currentline +  "): Forward Delcaration of assembly function " + cleanedLabel);
+		}
+		else {
+			if(this.isParsingAFunction) {
+				endFunctionParse(this.currentFunctionIdentifier);
+			}
+			
+			this.isParsingAFunction = true;
+				
+			startFunctionParse(cleanedLabel);
+			
+		}
+		
+	}
+
+	private void addGlobalLabel(String [] parsedLine) throws AssemblyParserException {
+		
+		if(parsedLine.length < 2) {
+			throw new AssemblyParserException("No Label for global function specified");
+		}
+		
+		if(parsedLine[1].isBlank()) {
+			throw new AssemblyParserException("Blank Label for global function specified");
+		}
+		
+		if(this.parsedAssembly.containsKey(parsedLine[1])) {
+			throw new AssemblyParserException("Redeclaration of Assembly Function");
+		}
+		
+		if(this.isParsingAFunction) {
+			endFunctionParse(this.currentFunctionIdentifier);
+		}
+		
+		declareFunction(parsedLine[1]);
+
+	}
+
+	private void endFunctionParse(String functionname) {
+		
+		LinkedList<String []> ClonedASMFunction = new LinkedList<String []>(this.currentFunction);
+		
+		parsedAssembly.put(functionname, ClonedASMFunction);
+		
+		this.currentFunctionIdentifier = functionname;
+		
+		this.currentFunction = new LinkedList<String[]>();
+		
+		this.isParsingAFunction = false;
+		
+	}
+	
+	private void startFunctionParse(String functionname) {
+		
+		this.currentFunctionIdentifier = functionname;
+		
+		this.currentFunction = new LinkedList<String[]>();
+		
+		parsedAssembly.put(functionname, null);
+		
+		this.isParsingAFunction = true;
+	}
+	
+	private void declareFunction(String functionname) {
+			
+			parsedAssembly.put(functionname, null);
+			
+			this.isParsingAFunction = false;
+	}
+	
+
+	public HashMap<String, LinkedList<String[]>> getAllParsedLines() {
+		return this.parsedAssembly;
 	}
 
     public static void main(String[] args){

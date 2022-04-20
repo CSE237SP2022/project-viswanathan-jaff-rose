@@ -61,7 +61,8 @@ public class TestCPUClass {
 		expectedInstructionMap.put("INC", new INC());
 		expectedInstructionMap.put("LDI", new LDI());
 		expectedInstructionMap.put("ADD", new ADD());
-		expectedInstructionMap.put("@@printregs", new PrintRegs());
+		expectedInstructionMap.put("RET", new RET());
+		expectedInstructionMap.put("@@PRINTREGS", new PrintRegs());
 		
 
 		
@@ -104,10 +105,24 @@ public class TestCPUClass {
 		} catch (Exception e) {
 
 		}
+	}
+	
+	@Test
+	void testCPURunInvalidFunction() {
 		
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALLInvalidFunction.S");
 		
+		AFR.read();
 		
+		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
+		try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("ThisFunctionDoesNotExist");
+			fail("Allowed an invalid function to run");
+		} catch (Exception e) {
+			
+		}
 		
 	}
 	

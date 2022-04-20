@@ -1,0 +1,5 @@
+LDI r29, 0xFF
+
+INC r28
+
+ADD r28, r29

@@ -14,13 +14,20 @@ public class ATmega328PCPU extends AbstractCPU {
 	protected LinkedList<ATmega328PCPUState> CPUStates;
 
 	private HashMap<String, AbstractInstruction> instructionMap;
+	
+	private HashMap<String, LinkedList<String[]>> program;
+	
+	private HashMap<String, LinkedList<AbstractInstruction[]>> functionMap;
+	
+	
 
 	private void create_opcode_map() {
 
 		this.instructionMap.put("INC", new INC());
 		this.instructionMap.put("LDI", new LDI());
 		this.instructionMap.put("ADD", new ADD());
-		this.instructionMap.put("@@printregs", new PrintRegs());
+		this.instructionMap.put("RET", new RET());
+		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
 
 	public ATmega328PCPU() {
@@ -40,6 +47,13 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.currentState = new ATmega328PCPUState(oldcpu.getCurrentState());
 		this.instructionMap = new HashMap<String, AbstractInstruction>(oldcpu.getInstructionMap());
 
+	}
+	
+	public void loadProgram(HashMap<String, LinkedList<String[]>> allParsedLines) {
+		
+		this.program = allParsedLines;
+		
+		return;
 	}
 
 	private ATmega328PCPUState getCurrentState() {
@@ -71,18 +85,26 @@ public class ATmega328PCPU extends AbstractCPU {
 		return this.currentState.getRegisters();
 	}
 
-	public void run(LinkedList<String[]> instructions) throws Exception {
+	public void run(String functionName) throws Exception {
 
 		if (this.debugFlag) {
 			System.out.println(this.toString() + "\n");
 		}
+		
+		LinkedList<String[]> instructions = this.program.get(functionName);
+		
+		if(instructions == null) {
+			throw new Exception("Unable to locate function " + "\"" + functionName + "\". Did you forget to declare it?");
+		}
 
 		for (String[] Line : instructions) {
+			
+			String cleanedOpcode = stadardizeOpcodeString(Line[0]);
 
-			AbstractInstruction InstructionToExecute = instructionMap.get(Line[0]);
+			AbstractInstruction InstructionToExecute = instructionMap.get(cleanedOpcode);
 
 			if (InstructionToExecute == null) {
-				throw new Exception("Invalid Instruction " + "\"" + Line[0] + "\"" + " Specified");
+				throw new Exception("Invalid Instruction or Macro " + "\"" + cleanedOpcode + "\"" + " Specified");
 			}
 
 			String[] Args = pop_args(Line);
@@ -96,8 +118,17 @@ public class ATmega328PCPU extends AbstractCPU {
 			if(this.debugFlag) {
 				System.out.println(InstructionToExecute.getType());
 			}
+			
+			if(cleanedOpcode.equals("RET")) {
+				return;
+			}
 
 			switch (InstructionToExecute.getType()) {
+			
+			case FlowInstruction:
+				this.runFlowInstruction(cleanedOpcode);
+				break;
+			
 			case HWInstruction:
 				AbstractCPUState newState = InstructionToExecute.run(this.currentState, this.debugFlag);
 				if(newState instanceof ATmega328PCPUState){
@@ -105,7 +136,7 @@ public class ATmega328PCPU extends AbstractCPU {
 				}
 				break;
 			case Macro:
-				this.runMacro(InstructionToExecute.getOpcode());
+				this.runMacro(cleanedOpcode);
 				break;
 			}
 
@@ -118,16 +149,29 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	}
 
+	private String stadardizeOpcodeString(String opcode) {
+		return opcode.strip().toUpperCase();
+	}
+
 	private void runMacro(String opcode) throws Exception {
 
 		switch (opcode) {
 
-		case "@@printregs":
+		case "@@PRINTREGS":
 			System.out.println(this.toString());
 			return;
 
 		default:
 			throw new Exception("Invalid or Unimplemented Macro: " + opcode);
+		}
+
+	}
+	
+	private void runFlowInstruction(String opcode) throws Exception {
+
+		switch (opcode) {
+		default:
+			throw new Exception("Invalid or Unimplemented Flow Instruction: " + opcode);
 		}
 
 	}

@@ -25,7 +25,8 @@ public class TestINC {
 		System.out.println(AFR.getAllParsedLines());
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,9 +48,9 @@ public class TestINC {
 		System.out.println(AFR.getAllParsedLines());
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -68,9 +69,9 @@ public class TestINC {
 		System.out.println(AFR.getAllParsedLines());
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -91,9 +92,9 @@ public class TestINC {
 		System.out.println(AFR.getAllParsedLines());
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -123,9 +124,9 @@ public class TestINC {
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
 		try {
-			ArduinoUno.run(AFR.getAllParsedLines());
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("main");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
