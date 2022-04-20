@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -89,8 +90,9 @@ public class TestASMFileReader {
 			listOfParsedLines.add(completedParseOne);
 			listOfParsedLines.add(completedParseTwo);
 			
-			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			HashMap<String, LinkedList<String[]>> program = AFR.getAllParsedLines();
 			
+			LinkedList<String[]> returnedLines = program.get("main");
 			
 			for( int i = 0; i < returnedLines.size(); i++ ) {
 				
@@ -102,6 +104,7 @@ public class TestASMFileReader {
 			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 			
 			fail("Error occured during test");
@@ -125,7 +128,9 @@ public class TestASMFileReader {
 			LinkedList<String[]> listOfParsedLines = new LinkedList<>();
 			listOfParsedLines.add(completedParseOne);
 			
-			LinkedList<String[]> returnedLines = AFR.getAllParsedLines();
+			HashMap<String, LinkedList<String[]>> overallParse  = AFR.getAllParsedLines();
+			
+			LinkedList<String []> returnedLines = overallParse.get("main");
 			
 			for( int i = 0; i < returnedLines.size(); i++ ) {
 				for( int j = 0; j < returnedLines.get(i).length; j++ ) {
@@ -134,7 +139,7 @@ public class TestASMFileReader {
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			fail("Error occured during test");
 		}
 		

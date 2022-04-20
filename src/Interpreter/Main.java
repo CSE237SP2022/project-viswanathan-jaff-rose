@@ -35,7 +35,7 @@ public class Main {
 		if(verboseMode) {
 			System.out.println("Verbose Mode Enabled");
 			
-			if(functionToRun.equals("main")) {
+			if(!functionToRun.equals("main")) {
 				System.out.println("Running custom function: " + functionToRun);
 			}
 		}
@@ -52,7 +52,7 @@ public class Main {
 			ArduinoUno.loadProgram(AFR.getAllParsedLines());
 			ArduinoUno.run(functionToRun);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 

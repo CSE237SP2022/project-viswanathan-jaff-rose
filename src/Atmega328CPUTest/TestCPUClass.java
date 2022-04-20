@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 import Atmega328CPUInstructions.*;
+import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
@@ -104,10 +105,24 @@ public class TestCPUClass {
 		} catch (Exception e) {
 
 		}
+	}
+	
+	@Test
+	void testCPURunInvalidFunction() {
 		
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALLInvalidFunction.S");
 		
+		AFR.read();
 		
+		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
+		try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("ThisFunctionDoesNotExist");
+			fail("Allowed an invalid function to run");
+		} catch (Exception e) {
+			
+		}
 		
 	}
 	

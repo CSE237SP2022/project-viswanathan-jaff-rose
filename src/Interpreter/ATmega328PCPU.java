@@ -92,6 +92,10 @@ public class ATmega328PCPU extends AbstractCPU {
 		}
 		
 		LinkedList<String[]> instructions = this.program.get(functionName);
+		
+		if(instructions == null) {
+			throw new Exception("Unable to locate function " + "\"" + functionName + "\". Did you forget to declare it?");
+		}
 
 		for (String[] Line : instructions) {
 			
