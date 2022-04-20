@@ -1,5 +1,7 @@
 package Interpreter;
 
+import java.io.FileNotFoundException;
+
 public class Main {
 	
 	public static void main(String[] args) {
@@ -42,7 +44,12 @@ public class Main {
 		
 		ASMFileReader AFR = new ASMFileReader(args[0]);
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			System.out.println(e1);
+			return;
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -53,6 +60,7 @@ public class Main {
 			ArduinoUno.run(functionToRun);
 		} catch (Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 

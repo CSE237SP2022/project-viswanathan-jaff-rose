@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
+import Interpreter.AssemblyParserException;
 
 public class TestCPUClass {
 
@@ -112,7 +114,12 @@ public class TestCPUClass {
 		
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALLInvalidFunction.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			e1.printStackTrace();
+			return;
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
