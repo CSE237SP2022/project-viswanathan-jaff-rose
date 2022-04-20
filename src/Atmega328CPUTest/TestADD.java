@@ -1,6 +1,9 @@
 package Atmega328CPUTest;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.*;
@@ -10,13 +13,20 @@ import org.junit.jupiter.api.Test;
 import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
+import Interpreter.AssemblyParserException;
 
 public class TestADD {
 
     @Test
     void testADD_Simple() {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSimple.S");
-        AFR.read();
+        try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
         AbstractCPU ArduinoUno = new ATmega328PCPU();
 
         int oldDest = ArduinoUno.getRegister("r29");
@@ -35,7 +45,13 @@ public class TestADD {
     @Test
     void testADD_AllRegs() {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDFull.S");
-        AFR.read();
+        try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
         AbstractCPU ArduinoUno = new ATmega328PCPU();
 
         //test add for regs 16-31
@@ -58,7 +74,13 @@ public class TestADD {
     @Test
     void testADD_Self(){
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSelf.S");
-        AFR.read();
+        try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
         AbstractCPU ArduinoUno = new ATmega328PCPU();
 
         int oldDest = ArduinoUno.getRegister("r28");
@@ -79,7 +101,13 @@ public class TestADD {
     @Test
     void testADD_TwosComplementOverflow() {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDTwosComplementOverflow.S");
-        AFR.read();
+        try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         ArduinoUno.enableDebug(true);
 
@@ -98,7 +126,13 @@ public class TestADD {
     @Test
     void testADD_RealOverflow() {
         ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDRealOverflow.S");
-        AFR.read();
+        try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
         AbstractCPU ArduinoUno = new ATmega328PCPU();
         ArduinoUno.enableDebug(true);
 

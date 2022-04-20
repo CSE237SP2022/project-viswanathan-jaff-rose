@@ -6,9 +6,8 @@ ldi r29, 0x14
 INC r29
 LDI r28, 0xAF
 inc r28
-ret
 @@printregs
-ADD r28, r29
+call someFunction
 @@printregs
 ret
 

@@ -49,9 +49,9 @@ public class ASMFileReader {
 		return this.filepath;
 	}
 	
-	public void read() {
+	public void read() throws AssemblyParserException, FileNotFoundException{
 		
-		try {
+
 	            Scanner sc = new Scanner(this.file);
 	            
 	            extractAndValidateFile(sc);
@@ -66,14 +66,10 @@ public class ASMFileReader {
 	            sc.close();
 	            
 	            parseAllAssemblyLines();
-
-        } catch (Exception e){
-            System.out.println(e);
-        }
 		
 	}
 
-	private void extractAndValidateFile(Scanner sc) throws Exception {
+	private void extractAndValidateFile(Scanner sc) throws AssemblyParserException {
 		String fileName = this.file.toString();
 		boolean validFile = false;
 		int index = fileName.lastIndexOf('.');
@@ -87,7 +83,7 @@ public class ASMFileReader {
 
 		if(!validFile){
 			sc.close();
-		    throw new Exception("INVALID FILE TYPE");
+		    throw new AssemblyParserException("INVALID FILE TYPE");
 		}
 	}
 
@@ -121,7 +117,7 @@ public class ASMFileReader {
 		return arrayOfSeperateOpcodeAndParameters;
 	}
 	
-	public void parseAllAssemblyLines() {
+	public void parseAllAssemblyLines() throws AssemblyParserException {
 		for( int i = 0; i < assemblyLines.size(); i++ ) {
 			String[] parsedLine = parseAssemblyLine(assemblyLines.get(i));
 			
@@ -144,24 +140,13 @@ public class ASMFileReader {
 		
 	}
 	
-	private void determineLine(String [] parsedLine) {
+	private void determineLine(String [] parsedLine) throws  AssemblyParserException{
 		
 		if(parsedLine[0].equals(".global")) {
-			
-			try {
-				addGlobalLabel(parsedLine);
-			}
-			catch (Exception e) {
-				System.out.println(e);
-			}
+			addGlobalLabel(parsedLine);
 		}
 		else if(parsedLine[0].contains(":")) {
-			try {
-				initiateFunctionDefinition(parsedLine[0]);
-			} 
-			catch (AssemblyParserException e) {
-				System.out.println(e);
-			}
+			initiateFunctionDefinition(parsedLine[0]);
 		}
 		else {
 			
@@ -250,11 +235,4 @@ public class ASMFileReader {
 		return this.parsedAssembly;
 	}
 
-    public static void main(String[] args){
-    	
-    	ASMFileReader AFR = new ASMFileReader(args[0]);
-		
-		AFR.read();
-        
-    }
 }

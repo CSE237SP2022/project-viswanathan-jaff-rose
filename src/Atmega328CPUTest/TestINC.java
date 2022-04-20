@@ -1,6 +1,9 @@
 package Atmega328CPUTest;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.*;
@@ -10,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
+import Interpreter.AssemblyParserException;
 
 public class TestINC {
 	
@@ -18,7 +22,13 @@ public class TestINC {
 		
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCSimple.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -41,7 +51,13 @@ public class TestINC {
 		
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCDoubleINC.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -62,7 +78,13 @@ public class TestINC {
 	void testINC_Multiple_Registers() {
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCMultiRegs.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -85,7 +107,13 @@ public class TestINC {
 	void testINC_All_Registers() {
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCAllRegs.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
@@ -119,7 +147,13 @@ public class TestINC {
 	void testINC_Overflow() {
 		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCOverflow.S");
 		
-		AFR.read();
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Exception Occured During Parsing");
+		}
 		
 		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		

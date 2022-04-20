@@ -16,10 +16,6 @@ public class ATmega328PCPU extends AbstractCPU {
 	private HashMap<String, AbstractInstruction> instructionMap;
 	
 	private HashMap<String, LinkedList<String[]>> program;
-	
-	private HashMap<String, LinkedList<AbstractInstruction[]>> functionMap;
-	
-	
 
 	private void create_opcode_map() {
 
@@ -27,6 +23,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("LDI", new LDI());
 		this.instructionMap.put("ADD", new ADD());
 		this.instructionMap.put("RET", new RET());
+		this.instructionMap.put("JMP", new JMP());
 		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
 
@@ -107,10 +104,6 @@ public class ATmega328PCPU extends AbstractCPU {
 				throw new Exception("Invalid Instruction or Macro " + "\"" + cleanedOpcode + "\"" + " Specified");
 			}
 
-			String[] Args = pop_args(Line);
-
-			InstructionToExecute.setArgs(Args);
-
 			ATmega328PCPUState oldCPU = new ATmega328PCPUState(this.currentState);
 
 			this.CPUStates.add(oldCPU);
@@ -122,31 +115,51 @@ public class ATmega328PCPU extends AbstractCPU {
 			if(cleanedOpcode.equals("RET")) {
 				return;
 			}
-
-			switch (InstructionToExecute.getType()) {
 			
-			case FlowInstruction:
-				this.runFlowInstruction(cleanedOpcode);
-				break;
+			String runResult  = determineAndExecuteInstruction(Line, cleanedOpcode, InstructionToExecute);
 			
-			case HWInstruction:
-				AbstractCPUState newState = InstructionToExecute.run(this.currentState, this.debugFlag);
-				if(newState instanceof ATmega328PCPUState){
-					this.acceptNewCPUState((ATmega328PCPUState) newState);
-				}
+			switch(runResult) {
+				case "RET":
+					
+			
+				default:
 				break;
-			case Macro:
-				this.runMacro(cleanedOpcode);
-				break;
-			}
-
-			if (this.debugFlag) {
-				System.out.println(Arrays.toString(Line));
-				System.out.println(this.toString() + "\n");
 			}
 
 		}
 
+	}
+
+	private String determineAndExecuteInstruction(String[] Line, String cleanedOpcode,
+			AbstractInstruction InstructionToExecute) throws Exception {
+		
+		String[] Args = pop_args(Line);
+		
+		InstructionToExecute.setArgs(Args);
+		
+		switch (InstructionToExecute.getType()) {
+		
+		case FlowInstruction:
+			this.runFlowInstruction(cleanedOpcode, Args);
+			break;
+		
+		case HWInstruction:
+			AbstractCPUState newState = InstructionToExecute.run(this.currentState, this.debugFlag);
+			if(newState instanceof ATmega328PCPUState){
+				this.acceptNewCPUState((ATmega328PCPUState) newState);
+			}
+			break;
+		case Macro:
+			this.runMacro(cleanedOpcode);
+			break;
+		}
+
+		if (this.debugFlag) {
+			System.out.println(Arrays.toString(Line));
+			System.out.println(this.toString() + "\n");
+		}
+		
+		return "NEC";
 	}
 
 	private String stadardizeOpcodeString(String opcode) {
@@ -167,9 +180,20 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	}
 	
-	private void runFlowInstruction(String opcode) throws Exception {
+	private String runFlowInstruction(String opcode, String [] args) throws Exception {
 
 		switch (opcode) {
+		
+		case "JMP":
+			
+			if(!this.program.containsKey(args[0])) {
+				throw new Exception("Invalid function " + args[0] + " called");
+			}
+			this.run(args[0]);
+			return opcode;
+			
+			
+		
 		default:
 			throw new Exception("Invalid or Unimplemented Flow Instruction: " + opcode);
 		}

@@ -1,5 +1,6 @@
 package InterpreterTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
 import Interpreter.ASMFileReader;
+import Interpreter.AssemblyParserException;
 
 public class TestASMFileReader {
 	
@@ -146,6 +148,58 @@ public class TestASMFileReader {
 			
 		
 		
+	}
+	
+	@Test
+	void test_multiple_function_parse() {
+
+		try {
+			
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/MultiFunction.S");
+			AFR.read();    
+			String[] expectedParseMain = {"LDI", "r29", "0xAF"};
+			String[] expectedParseFunc1 = {"ORI", "r29", "0xFF"};
+			String[] expectedParseFunc2 = {"INC", "r26"};
+			
+			HashMap<String, LinkedList<String[]>> overallParse  = AFR.getAllParsedLines();
+		
+			assertEquals(overallParse.size(), 3);
+			
+			
+			for(int i=0;i<overallParse.get("main").get(0).length;i++) {
+				assertEquals(overallParse.get("main").get(0)[i] , expectedParseMain[i]);
+			}
+			
+			for(int i=0;i<overallParse.get("func1").get(0).length;i++) {
+				assertEquals(overallParse.get("func1").get(0)[i] , expectedParseFunc1[i]);
+			}
+			
+			for(int i=0;i<overallParse.get("func2").get(0).length;i++) {
+				assertEquals(overallParse.get("func2").get(0)[i] , expectedParseFunc2[i]);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Error occured during test");
+		}
+	}
+	
+	@Test
+	void test_undeclared_function() {
+
+		try {
+			
+			ASMFileReader AFR = new ASMFileReader("src/InterpreterTest/UndeclaredFunction.S");
+			AFR.read();
+			fail("Parsed Garbage Function");
+			
+		} catch (Exception e) {
+			
+			if( !(e instanceof AssemblyParserException) ){
+				fail("Threw Exception that was not AssemblyParserException");
+			}
+			
+		}
 	}
 	
 	
