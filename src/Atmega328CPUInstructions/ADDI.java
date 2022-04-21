@@ -12,7 +12,7 @@ public class ADDI extends ATmega328PInstruction {
     private int immediate;
     private ATmega328PCPUState cpustate;
 
-    public ADD() {
+    public ADDI() {
         this.opcode = "ADDI";
         this.CPU = "Atmega328P";
         this.type = InstructionType.HWInstruction;

@@ -1,0 +1,19 @@
+.global main
+
+
+main:
+ADDI r16 4
+ADDI r17 4
+ADDI r18 4
+ADDI r19 4
+ADDI r21 4
+ADDI r22 4
+ADDI r23 4
+ADDI r24 4
+ADDI r25 4
+ADDI r26 4
+ADDI r27 4
+ADDI r28 4
+ADDI r29 4
+ADDI r30 4
+ADDI r31 4
