@@ -20,7 +20,7 @@ public class TestINC {
 	@Test
 	void testINC_Simple() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCSimple.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INC/INCSimple.S");
 		
 		try {
 			AFR.read();
@@ -49,7 +49,7 @@ public class TestINC {
 	@Test
 	void testINC_Double_Increment() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCDoubleINC.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INC/INCDoubleINC.S");
 		
 		try {
 			AFR.read();
@@ -76,7 +76,7 @@ public class TestINC {
 	
 	@Test
 	void testINC_Multiple_Registers() {
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCMultiRegs.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INC/INCMultiRegs.S");
 		
 		try {
 			AFR.read();
@@ -105,7 +105,7 @@ public class TestINC {
 	
 	@Test
 	void testINC_All_Registers() {
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCAllRegs.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INC/INCAllRegs.S");
 		
 		try {
 			AFR.read();
@@ -145,7 +145,7 @@ public class TestINC {
 	
 	@Test
 	void testINC_Overflow() {
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INCOverflow.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/INC/INCOverflow.S");
 		
 		try {
 			AFR.read();

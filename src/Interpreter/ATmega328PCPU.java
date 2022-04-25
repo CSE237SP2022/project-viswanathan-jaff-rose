@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Stack;
 
 import Atmega328CPUInstructions.*;
 
@@ -24,6 +25,8 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("ADD", new ADD());
 		this.instructionMap.put("RET", new RET());
 		this.instructionMap.put("JMP", new JMP());
+		this.instructionMap.put("PUSH", new PUSH());
+		this.instructionMap.put("POP", new POP());
 		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
 
@@ -236,6 +239,10 @@ public class ATmega328PCPU extends AbstractCPU {
 			return this.currentState.getRegister(register);
 
 		}
+	}
+	
+	public LinkedList<Integer> getMemStack() {
+		return this.currentState.getMemoryStack();
 	}
 
 	public HashMap<String, Integer> getRegisterMap() {

@@ -2,4 +2,4 @@
 
 
 main:
-ADD r29 r28
+ADD r29, r28

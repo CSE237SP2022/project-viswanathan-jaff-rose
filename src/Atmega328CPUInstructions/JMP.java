@@ -15,12 +15,11 @@ public class JMP extends AbstractInstruction {
 	@Override
 	public void setArgs(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public AbstractCPUState run(AbstractCPUState cpustate, boolean debug) throws Exception {
-		return null;
+		throw new Exception("Flow Instruction " + this.opcode  + " was ran as Hardware Instruction");
 	}
 
 }
