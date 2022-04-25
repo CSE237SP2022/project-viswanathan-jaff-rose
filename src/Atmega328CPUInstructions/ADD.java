@@ -18,7 +18,10 @@ public class ADD extends ATmega328PInstruction {
         this.type = InstructionType.HWInstruction;
     }
 
-    public void setArgs(String[] args) {
+    public void setArgs(String[] args) throws Exception {
+		if(args.length != 2) {			
+			throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
+		}
         this.destRegister = args[0];
         this.srcRegister = args[1];
     }

@@ -1,21 +1,29 @@
 package Interpreter;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Stack;
 
 public class ATmega328PCPUState extends AbstractCPUState {
 
 	protected HashMap<String, Integer> registers;
 
 	private long programCounter;
+	
+	private LinkedList<Integer> memoryStack;
 
 	public ATmega328PCPUState() {
 		this.registers = new HashMap<String, Integer>();
+		this.memoryStack = new LinkedList<Integer>();
 		setDefault();
 	}
 
 	public ATmega328PCPUState(ATmega328PCPUState currentState) {
 		this.registers = new HashMap<String, Integer>(currentState.getRegisters());
+		this.memoryStack = new LinkedList<Integer> ();
+
 	}
 
 	public ATmega328PCPUState(HashMap<String, Integer> registers2, long programCounter2) {
@@ -57,6 +65,22 @@ public class ATmega328PCPUState extends AbstractCPUState {
 
 	public HashMap<String, Integer> getRegisters() {
 		return this.registers;
+	}
+	
+	public LinkedList<Integer> getMemoryStack(){
+		return this.memoryStack;
+	}
+	
+	public void pushStack(Integer value) {
+		this.memoryStack.push(value);
+	}
+	
+	public Integer popStack() {
+		return this.memoryStack.pop();
+	}
+	
+	public Integer peekStack() {
+		return this.memoryStack.peekFirst();
 	}
 
 	public String toString() {

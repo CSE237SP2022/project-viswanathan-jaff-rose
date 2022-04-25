@@ -19,7 +19,7 @@ public class TestADD {
 
     @Test
     void testADD_Simple() {
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSimple.S");
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADD/ADDSimple.S");
         try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -44,7 +44,7 @@ public class TestADD {
 
     @Test
     void testADD_AllRegs() {
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDFull.S");
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADD/ADDFull.S");
         try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -73,7 +73,7 @@ public class TestADD {
 
     @Test
     void testADD_Self(){
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDSelf.S");
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADD/ADDSelf.S");
         try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -100,7 +100,7 @@ public class TestADD {
 
     @Test
     void testADD_TwosComplementOverflow() {
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDTwosComplementOverflow.S");
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADD/ADDTwosComplementOverflow.S");
         try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -125,7 +125,7 @@ public class TestADD {
     
     @Test
     void testADD_RealOverflow() {
-        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADDRealOverflow.S");
+        ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/ADD/ADDRealOverflow.S");
         try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {

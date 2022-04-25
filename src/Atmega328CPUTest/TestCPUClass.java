@@ -53,26 +53,6 @@ public class TestCPUClass {
 		assertTrue(expectedRegisternMap.equals(ArduinoUno.getRegisterMap()));
 	}
 	
-	@Test
-	void testCPUHasAllSupportedInstructions() {
-		
-		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
-		
-		HashMap<String, AbstractInstruction> expectedInstructionMap = new HashMap<String, AbstractInstruction>();	
-		
-		expectedInstructionMap.put("INC", new INC());
-		expectedInstructionMap.put("LDI", new LDI());
-		expectedInstructionMap.put("ADD", new ADD());
-		expectedInstructionMap.put("RET", new RET());
-		expectedInstructionMap.put("@@PRINTREGS", new PrintRegs());
-		
-
-		
-		System.out.println(expectedInstructionMap.toString());
-		System.out.println(ArduinoUno.getSupportedInstructions().toString());
-
-		assertTrue(expectedInstructionMap.equals(ArduinoUno.getSupportedInstructions()));
-	}
 	
 	@Test
 	void testCPUGetandSetRegisterSimple() {
@@ -112,7 +92,7 @@ public class TestCPUClass {
 	@Test
 	void testCPURunInvalidFunction() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALLInvalidFunction.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALL/CALLInvalidFunction.S");
 		
 		try {
 			AFR.read();

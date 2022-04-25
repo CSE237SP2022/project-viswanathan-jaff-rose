@@ -124,7 +124,7 @@ public class TestASMFileReader {
 		
 		try {
 			
-			ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/PrintRegsBasic.S");
+			ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/PrintRegs/PrintRegsBasic.S");
 			AFR.read();    
 			String[] completedParseOne= {"@@printregs", ""};
 			LinkedList<String[]> listOfParsedLines = new LinkedList<>();
