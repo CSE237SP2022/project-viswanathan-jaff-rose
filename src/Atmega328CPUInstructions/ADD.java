@@ -5,11 +5,13 @@ import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractCPUState;
 import Interpreter.InstructionType;
+import Utils.ParsingUtils;
 public class ADD extends ATmega328PInstruction {
 
     //member variable declaration
     private String destRegister;
     private String srcRegister;
+    private String [] args;
     private ATmega328PCPUState cpustate;
 
     public ADD() {
@@ -18,9 +20,16 @@ public class ADD extends ATmega328PInstruction {
         this.type = InstructionType.HWInstruction;
     }
 
-    public void setArgs(String[] args) {
-        this.destRegister = args[0];
-        this.srcRegister = args[1];
+    public void setArgs(String[] args) throws Exception{
+  
+        if(args.length != 2) {			
+			throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
+		}
+		
+		this.destRegister = args[0];
+		this.srcRegister = args[1];
+		
+		this.args = args;
     }
 
     @Override

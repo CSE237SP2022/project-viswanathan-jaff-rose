@@ -17,7 +17,7 @@ public class TestLDI {
 	@Test
 	void testLDI_SimpleHex() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDISimpleHex.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDI/LDISimpleHex.S");
 		try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -43,7 +43,7 @@ public class TestLDI {
 	@Test
 	void testLDI_SimpleBinary() {
 	
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDISimpleBinary.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDI/LDISimpleBinary.S");
 		try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -69,7 +69,7 @@ public class TestLDI {
 	@Test
 	void testLDI_SimpleDecimal() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDISimpleDecimal.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDI/LDISimpleDecimal.S");
 		try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
@@ -95,7 +95,7 @@ public class TestLDI {
 	@Test
 	void testLDI_SimpleOctal() {
 		
-		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDISimpleOctal.S");
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/LDI/LDISimpleOctal.S");
 		try {
 			AFR.read();
 		} catch (FileNotFoundException | AssemblyParserException e1) {
