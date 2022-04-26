@@ -2,4 +2,4 @@
 
 
 main:
-ADDI r29 4
+ADDI r29, 4
