@@ -41,7 +41,7 @@ public class ADDI extends ATmega328PInstruction {
     public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
         this.cpustate = cpustate;
         if(debug) {
-            printDebug(cpustate.getRegister(this.immediate));
+            printDebug(Integer.valueOf(this.immediate));
         }
         int result = cpustate.getRegister(this.destRegister) + Integer.valueOf(this.immediate);
         //checks for two's complement overflow of register
