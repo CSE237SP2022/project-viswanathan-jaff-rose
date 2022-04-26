@@ -5,11 +5,13 @@ import Interpreter.ATmega328PInstruction;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractCPUState;
 import Interpreter.InstructionType;
+import Utils.ParsingUtils;
 public class ADDI extends ATmega328PInstruction {
 
     //member variable declaration
     private String destRegister;
-    private int immediate;
+    private String immediate;
+    private String [] args;
     private ATmega328PCPUState cpustate;
 
     public ADDI() {
@@ -18,26 +20,38 @@ public class ADDI extends ATmega328PInstruction {
         this.type = InstructionType.HWInstruction;
     }
 
-    public void setArgs(String[] args) {
+    public void setArgs(String[] args) throws Exception{
+       
+        
+        if(args.length != 2) {			
+			throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
+		}
+        
         this.destRegister = args[0];
         this.immediate = args[1];
+        
+        if(this.immediate.equals(null)) {
+			throw new Exception("Invalid Immediate Constant " + args[1]);
+		}
+		
+		this.args = args;
     }
 
     @Override
     public ATmega328PCPUState run(ATmega328PCPUState cpustate, boolean debug) throws Exception{
         this.cpustate = cpustate;
         if(debug) {
-            printDebug(cpustate.getRegister(this.srcRegister));
+            printDebug(cpustate.getRegister(this.immediate));
         }
-        int result = cpustate.getRegister(this.destRegister) + this.immediate;
+        int result = cpustate.getRegister(this.destRegister) + Integer.valueOf(this.immediate);
         //checks for two's complement overflow of register
         if(result >= 0x7F) {
-            cpustate.setRegister(this.destRegister, (this.immediate + this.cpustate.getRegister(this.destRegister)));
+            cpustate.setRegister(this.destRegister, (Integer.valueOf(this.immediate) + this.cpustate.getRegister(this.destRegister)));
             cpustate.setRegister("V", (byte) 1);
             return cpustate;
         }
         else {
-            cpustate.setRegister(this.destRegister, (this.immediate + this.cpustate.getRegister(this.destRegister)));
+            cpustate.setRegister(this.destRegister, (Integer.valueOf(this.immediate) + this.cpustate.getRegister(this.destRegister)));
             return cpustate;
         }
 
