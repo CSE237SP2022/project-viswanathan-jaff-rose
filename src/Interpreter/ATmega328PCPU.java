@@ -25,9 +25,14 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("ADD", new ADD());
 		this.instructionMap.put("RET", new RET());
 		this.instructionMap.put("JMP", new JMP());
+		
+		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
+		
+		this.instructionMap.put("BREQ", new BREQ());
+		this.instructionMap.put("BRNE", new BRNE());
+		
 		this.instructionMap.put("PUSH", new PUSH());
 		this.instructionMap.put("POP", new POP());
-		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
 
 	public ATmega328PCPU() {
@@ -194,8 +199,17 @@ public class ATmega328PCPU extends AbstractCPU {
 			}
 			this.run(args[0]);
 			return opcode;
-			
-			
+		
+		case "BRNE":
+			if(this.getRegister("Z") > 0 ) {
+				this.run(args[0]);
+			}
+			return opcode;
+		case "BREQ":
+			if(this.getRegister("Z") == 0) {
+				this.run(args[0]);
+			}
+			return opcode;
 		
 		default:
 			throw new Exception("Invalid or Unimplemented Flow Instruction: " + opcode);
