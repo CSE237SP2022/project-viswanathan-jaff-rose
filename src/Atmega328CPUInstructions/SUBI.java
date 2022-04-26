@@ -9,8 +9,9 @@ public class SUBI extends ATmega328PInstruction {
 
     //member variable declaration
     private String destRegister;
-    private int immediate;
+    private String immediate;
     private ATmega328PCPUState cpustate;
+    private String[] args
 
     public ADD() {
         this.opcode = "SUBI";
@@ -19,8 +20,18 @@ public class SUBI extends ATmega328PInstruction {
     }
 
     public void setArgs(String[] args) {
+        if(args.length != 2) {
+            throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
+        }
+
         this.destRegister = args[0];
         this.immediate = args[1];
+
+        if(this.immediate.equals(null)) {
+            throw new Exception("Invalid Immediate Constant " + args[1]);
+        }
+
+        this.args = args;
     }
 
     @Override
@@ -30,15 +41,15 @@ public class SUBI extends ATmega328PInstruction {
 //            printDebug(cpustate.getRegister(this.srcRegister));
             System.out.println('Value to sub: '+this.immediate+': Register to sub: '+cpustate.getRegister(this.destRegister))
         }
-        int result = cpustate.getRegister(this.destRegister) - this.immediate;
+        int result = cpustate.getRegister(this.destRegister) - Integer.valueOf(this.immediate);
         //checks for two's complement overflow of register
         if(result >= 0x7F) {
-            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.destRegister)-this.immediate));
+            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.destRegister)-Integer.valueOf(this.immediate)));
             cpustate.setRegister("V", (byte) 1);
             return cpustate;
         }
         else {
-            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.destRegister)-this.immediate));
+            cpustate.setRegister(this.destRegister, (this.cpustate.getRegister(this.destRegister)-Integer.valueOf(this.immediate)));
             return cpustate;
         }
 
