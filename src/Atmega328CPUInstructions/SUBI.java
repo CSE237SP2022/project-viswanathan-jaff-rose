@@ -11,15 +11,15 @@ public class SUBI extends ATmega328PInstruction {
     private String destRegister;
     private String immediate;
     private ATmega328PCPUState cpustate;
-    private String[] args
+    private String[] args;
 
-    public ADD() {
+    public SUBI() {
         this.opcode = "SUBI";
         this.CPU = "Atmega328P";
         this.type = InstructionType.HWInstruction;
     }
 
-    public void setArgs(String[] args) {
+    public void setArgs(String[] args) throws Exception{
         if(args.length != 2) {
             throw new Exception("Incorrect Number of Arguments specified, was " + args.length + " expected 2");
         }
@@ -39,7 +39,7 @@ public class SUBI extends ATmega328PInstruction {
         this.cpustate = cpustate;
         if(debug) {
 //            printDebug(cpustate.getRegister(this.srcRegister));
-            System.out.println('Value to sub: '+this.immediate+': Register to sub: '+cpustate.getRegister(this.destRegister))
+            System.out.println("Value to sub: "+this.immediate+": Register to sub: "+cpustate.getRegister(this.destRegister));
         }
         int result = cpustate.getRegister(this.destRegister) - Integer.valueOf(this.immediate);
         //checks for two's complement overflow of register
@@ -65,6 +65,6 @@ public class SUBI extends ATmega328PInstruction {
 
     private void printDebug(int newVal) {
         System.out.println("Existing Value at destination register " + this.destRegister + ": " + this.cpustate.getRegister(this.destRegister));
-        System.out.println("New Value at destination register " + this.destRegister + ": " + (this.cpustate.getRegister(this.destRegister)-this.immediate));
+        System.out.println("New Value at destination register " + this.destRegister + ": " + (this.cpustate.getRegister(this.destRegister)-Integer.valueOf(this.immediate)));
     }
 }
