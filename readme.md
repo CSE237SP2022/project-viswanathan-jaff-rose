@@ -30,7 +30,9 @@ An Arduino Assembly Interpreter written in Java. This can be considered an HLE-l
    
   
 ### Is there anything that you implemented but doesn't currently work?
-Not currently
+
+RET is technically implemented but it is not 100% compatible with Arduino Assembly. It doesn't obey call-saved registers, but it does propely end execution of assembly labels.
+
 
 ### What commands are needed to compile and run your code from the command line? 
 
