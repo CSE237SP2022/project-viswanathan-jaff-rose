@@ -22,6 +22,7 @@ An Arduino Assembly Interpreter written in Java. This can be considered an HLE-l
 
 ### What user stories were completed this iteration?
   - More arithmetic instructions were addded (ADDI, SUBI)
+  - Logical instructions were added (CP, LSL, LSR)
   - Labels and global directives
   - The ability to jump to labels
   - The ability to branch to labels
