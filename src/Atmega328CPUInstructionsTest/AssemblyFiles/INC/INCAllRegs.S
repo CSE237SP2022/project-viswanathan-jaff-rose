@@ -1,3 +1,7 @@
+.global main
+
+
+main:
 INC r16
 INC r17
 INC r18
