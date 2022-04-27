@@ -237,9 +237,9 @@ public class ATmega328PCPU extends AbstractCPU {
 			}
 			return opcode;
 		case "BREQ":
-			//if(this.debugFlag) {
+			if(this.debugFlag) {
 				System.out.println("BREQ hooked and is " + this.getRegister("Z"));
-			//}
+			}
 			if(this.getRegister("Z") > 0) {
 				this.run(args[0]);
 			}

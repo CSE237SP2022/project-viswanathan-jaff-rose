@@ -35,7 +35,6 @@ public class CP extends ATmega328PInstruction {
         //checks for result of comparison
         if(result == 0) {
         	// They are equal
-        	System.out.println("Equal regs!");
             cpustate.setRegister("Z", (byte) 1);
             return cpustate;
         } else if( result < 0 ) {
