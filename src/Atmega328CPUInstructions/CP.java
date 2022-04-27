@@ -33,9 +33,9 @@ public class CP extends ATmega328PInstruction {
         int srcNumber = cpustate.getRegister(this.srcRegister);
         int result = destNumber - srcNumber;
         //checks for result of comparison
-        if(result == 0x00) {
+        if(result == 0) {
         	// They are equal
-        	
+        	System.out.println("Equal regs!");
             cpustate.setRegister("Z", (byte) 1);
             return cpustate;
         } else if( result < 0 ) {
