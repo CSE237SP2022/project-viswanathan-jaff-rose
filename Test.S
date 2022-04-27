@@ -1,8 +1,16 @@
-LDI r29, 0x14
+.global main
+.global someFunction
+
+main:
+ldi r29, 0x14
 INC r29
 LDI r28, 0xAF
+inc r28
 @@printregs
-INC r28
-ADD r28, r29
+jmp someFunction
 @@printregs
+ret
 
+someFunction:
+INC r29
+ret

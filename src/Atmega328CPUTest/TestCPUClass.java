@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import Interpreter.ASMFileReader;
 import Interpreter.ATmega328PCPU;
 import Interpreter.AbstractCPU;
 import Interpreter.AbstractInstruction;
+import Interpreter.AssemblyParserException;
 
 public class TestCPUClass {
 
@@ -51,25 +53,6 @@ public class TestCPUClass {
 		assertTrue(expectedRegisternMap.equals(ArduinoUno.getRegisterMap()));
 	}
 	
-	@Test
-	void testCPUHasAllSupportedInstructions() {
-		
-		ATmega328PCPU ArduinoUno = new ATmega328PCPU();
-		
-		HashMap<String, AbstractInstruction> expectedInstructionMap = new HashMap<String, AbstractInstruction>();	
-		
-		expectedInstructionMap.put("INC", new INC());
-		expectedInstructionMap.put("LDI", new LDI());
-		expectedInstructionMap.put("ADD", new ADD());
-		expectedInstructionMap.put("@@printregs", new PrintRegs());
-		
-
-		
-		System.out.println(expectedInstructionMap.toString());
-		System.out.println(ArduinoUno.getSupportedInstructions().toString());
-
-		assertTrue(expectedInstructionMap.equals(ArduinoUno.getSupportedInstructions()));
-	}
 	
 	@Test
 	void testCPUGetandSetRegisterSimple() {
@@ -104,10 +87,29 @@ public class TestCPUClass {
 		} catch (Exception e) {
 
 		}
+	}
+	
+	@Test
+	void testCPURunInvalidFunction() {
 		
+		ASMFileReader AFR = new ASMFileReader("src/Atmega328CPUInstructionsTest/AssemblyFiles/CALL/CALLInvalidFunction.S");
 		
+		try {
+			AFR.read();
+		} catch (FileNotFoundException | AssemblyParserException e1) {
+			e1.printStackTrace();
+			return;
+		}
 		
+		AbstractCPU ArduinoUno = new ATmega328PCPU();
 		
+		try {
+			ArduinoUno.loadProgram(AFR.getAllParsedLines());
+			ArduinoUno.run("ThisFunctionDoesNotExist");
+			fail("Allowed an invalid function to run");
+		} catch (Exception e) {
+			
+		}
 		
 	}
 	
