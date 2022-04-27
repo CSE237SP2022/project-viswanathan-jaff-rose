@@ -32,6 +32,7 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("POP", new POP());
 		this.instructionMap.put("ADDI", new ADDI());
 		this.instructionMap.put("LSR", new LSR());
+    this.instructionMap.put("SUBI", new SUBI());
 		this.instructionMap.put("LSL", new LSL());
 		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
 	}
