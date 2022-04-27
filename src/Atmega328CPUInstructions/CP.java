@@ -39,10 +39,12 @@ public class CP extends ATmega328PInstruction {
             cpustate.setRegister("Z", (byte) 1);
             return cpustate;
         } else if( result < 0 ) {
+        	// dest is smaller
         	cpustate.setRegister("Z", (byte) 0);
         	cpustate.setRegister("C", (byte) 1);
         	return cpustate;
         } else {
+        	// dest is larger
         	cpustate.setRegister("Z", (byte) 0);
         	cpustate.setRegister("C", (byte) 0);
         	return cpustate;
