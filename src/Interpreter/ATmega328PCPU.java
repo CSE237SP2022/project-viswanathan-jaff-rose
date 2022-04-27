@@ -30,6 +30,8 @@ public class ATmega328PCPU extends AbstractCPU {
 		this.instructionMap.put("JMP", new JMP());
 		
 		this.instructionMap.put("@@PRINTREGS", new PrintRegs());
+		this.instructionMap.put("@@PRINTREG", new PrintReg());
+		this.instructionMap.put("@@KILL", new Kill());
 		
 		this.instructionMap.put("BREQ", new BREQ());
 		this.instructionMap.put("BRNE", new BRNE());
@@ -166,7 +168,7 @@ public class ATmega328PCPU extends AbstractCPU {
 			}
 			break;
 		case Macro:
-			this.runMacro(cleanedOpcode);
+			this.runMacro(cleanedOpcode, Args);
 			break;
 		}
 
@@ -182,12 +184,33 @@ public class ATmega328PCPU extends AbstractCPU {
 		return opcode.strip().toUpperCase();
 	}
 
-	private void runMacro(String opcode) throws Exception {
+	private void runMacro(String opcode, String[] args) throws Exception {
 
 		switch (opcode) {
 
 		case "@@PRINTREGS":
 			System.out.println(this.toString());
+			return;
+		
+		case "@@PRINTREG":
+			if(args.length > 0) {
+			StringBuilder regStr = new StringBuilder();
+			
+			regStr.append(args[0] + ": 0x");
+			
+			String longbyte = String.format("%02X ", this.currentState.getRegister(args[0]));
+			
+			regStr.append(longbyte.substring(longbyte.length()-3, longbyte.length()-1));
+			
+			System.out.println("Value of " + regStr.toString());
+			}
+			else{
+				throw new Exception("Invalid arguments for " + opcode + " specified");
+			}
+		
+		case "@@KILL":
+			System.out.println("Command to kill execution called");
+			System.exit(0);
 			return;
 
 		default:
@@ -209,12 +232,15 @@ public class ATmega328PCPU extends AbstractCPU {
 			return opcode;
 		
 		case "BRNE":
-			if(this.getRegister("Z") > 0 ) {
+			if(this.getRegister("Z") == 0 ) {
 				this.run(args[0]);
 			}
 			return opcode;
 		case "BREQ":
-			if(this.getRegister("Z") == 0) {
+			//if(this.debugFlag) {
+				System.out.println("BREQ hooked and is " + this.getRegister("Z"));
+			//}
+			if(this.getRegister("Z") > 0) {
 				this.run(args[0]);
 			}
 			return opcode;
