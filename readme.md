@@ -1,20 +1,39 @@
-### What user stories were completed this iteration?
-  - We built the CPU class/CPU States and the OOP that handles execution
-  - We then refactored the CPU model because there were things wrong with it
-  - CPU Instructions ADD, LDI, and INC
-  - Assembly Macros (@@printregs)
-  - Basic code to tryout assembly SUB and CP (not in production currently)
-  - Unit tests to verify all this works
+# Javaduino
 
-### What user stories do you intend to complete next iteration?
-  - More instructions. Including ADI, and MOV, etc
-  - More robust exception handling
-  - If time: Function detection and function calling
+An Arduino Assembly Interpreter written in Java. This can be considered an HLE-like implementation of an AVR assembly emulation.
+
+### What it supports
+- Basic arithmetic instructions (add, addi, inc, etc.)
+- Basic register management instructions (ldi, mov, etc.)
+- Jumping and branching (via jmp, breq, brne)
+- Emulated SRAM memory stack such that push and pop are supported
+- 
+
+### What it does not support
+- Call-saved/Call-clobbered registers 
+- GPIO pin emulation
+- C-Style function calls
+- Data Space instructions (sts, etc.)
+- X, Y, Z pointers
+- Interrupts
+- Directly running compiled binaries (this is an **Interpreter** not a direct emulator)
+- Certain GNU Assembler directives (ex. .data labels)
+
+
+### What user stories were completed this iteration?
+  - More arithmetic instructions were addded (ADDI, SUBI)
+  - Labels and global directives
+  - The ability to jump to labels
+  - The ability to branch to labels
+  - Register comparison for said branching
+  - SRAM stack emulation (PUSH and POP can be executed)
+   
   
 ### Is there anything that you implemented but doesn't currently work?
-  - We refactored the code to make the registers Java Integers, because encoding the data into Java bytes was giving us issues when it came to values in the high bits since bytes are signed. As a result, the CPU registers theoretically can't handle overflow right now, but in practice, the overflow moves into the 24 high bits which are ignored for the instructions and workflow we've written. We plan to immediately add overflow checking in our next model.
-  - The commands SUB and CP (assembly subtract and compare) are currently being tested and worked on. They are in their own branch and do not currently work, but they will be finished for iteration 3
-  
+
+RET is technically implemented but it is not 100% compatible with Arduino Assembly. It doesn't obey call-saved registers, but it does propely end execution of assembly labels.
+
+
 ### What commands are needed to compile and run your code from the command line? 
 
 A shell script is provided to run it, and a test Assembly File has been provided.
@@ -29,4 +48,10 @@ run with debug:
 
 ```bash
 sh run.sh Test.S -d
+```
+
+We have also added a demo of the Fibonacci Sequece
+
+```bash
+sh run.sh Fib.S
 ```

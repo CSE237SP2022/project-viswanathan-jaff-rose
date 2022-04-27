@@ -2,4 +2,5 @@
 
 
 main:
-ADD r28, r28
+LDI r29, 16
+LSL r29

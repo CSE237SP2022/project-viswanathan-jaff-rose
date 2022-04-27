@@ -1,0 +1,20 @@
+.global main
+
+
+main:
+SUBI r16, 4
+SUBI r17, 4
+SUBI r18, 4
+SUBI r19, 4
+SUBI r20, 4
+SUBI r21, 4
+SUBI r22, 4
+SUBI r23, 4
+SUBI r24, 4
+SUBI r25, 4
+SUBI r26, 4
+SUBI r27, 4
+SUBI r28, 4
+SUBI r29, 4
+SUBI r30, 4
+SUBI r31, 4
