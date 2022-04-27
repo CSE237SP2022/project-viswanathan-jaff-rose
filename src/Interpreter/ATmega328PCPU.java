@@ -20,6 +20,7 @@ public class ATmega328PCPU extends AbstractCPU {
 
 	private void create_opcode_map() {
 
+		this.instructionMap.put("MOV", new MOV());
 		this.instructionMap.put("INC", new INC());
 		this.instructionMap.put("LDI", new LDI());
 		this.instructionMap.put("ADD", new ADD());
